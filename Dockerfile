@@ -10,8 +10,19 @@ RUN apt-get update \
     && hash -r \
     && pip install --no-cache-dir feedparser
 
+RUN groupadd -r swuser -g 433 && \
+    mkdir /home/swuser && \
+    useradd -u 431 -r -g swuser -d /home/swuser -s /sbin/nologin \
+         -c "Docker image user" swuser && \
+    chown -R swuser:swuser /home/swuser
+WORKDIR /home/swuser
+
+ADD sitecustomize.py /usr/lib/python2.7/sitecustomize.py
 ADD planet planet
 ADD update.sh update.sh
-ADD sitecustomize.py /usr/lib/python2.7/sitecustomize.py
+RUN chown -R swuser:swuser planet update.sh
+
+USER swuser
+
 RUN mkdir testrun/
 RUN ./update.sh
