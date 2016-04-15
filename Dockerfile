@@ -12,5 +12,6 @@ RUN apt-get update \
 
 ADD planet planet
 ADD update.sh update.sh
+ADD sitecustomize.py /usr/lib/python2.7/sitecustomize.py
 RUN mkdir testrun/
 RUN ./update.sh
