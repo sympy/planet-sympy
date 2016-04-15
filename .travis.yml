@@ -5,7 +5,6 @@ services:
 
 before_install:
   - docker build -t test/planet-sympy .
-  - docker run test/planet-sympy /bin/sh -c "wget sympy.org"
   - docker ps -a
 
 script:
