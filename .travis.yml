@@ -9,3 +9,4 @@ before_install:
 
 script:
   - ls
+  - docker run -t test/planet-sympy ./update.sh
