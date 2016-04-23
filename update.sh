@@ -31,7 +31,7 @@ if [ "${DEPLOY_TOKEN}" = "" ]; then
     echo "Not deploying because DEPLOY_TOKEN is empty."
     exit 0
 fi
-openssl aes-256-cbc -k ${DEPLOY_TOKEN} -in deploykey.enc -out deploykey -d
+openssl aes-256-cbc -k ${DEPLOY_TOKEN} -in ../deploykey.enc -out deploykey -d
 set -x
 
 chmod 600 deploykey
