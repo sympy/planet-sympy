@@ -26,6 +26,7 @@ if [ ! -n "$(grep "^github.com " ~/.ssh/known_hosts)" ]; then
     chmod 700 ~/.ssh
     ssh-keyscan github.com >> ~/.ssh/known_hosts
 fi
+rm -rf planet.sympy.org
 git clone git@github.com:planet-sympy/planet.sympy.org.git
 cd planet.sympy.org
 
