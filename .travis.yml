@@ -9,3 +9,7 @@ before_install:
 
 script:
   - ls
+  - docker run test/planet-sympy /bin/sh -c "./update.sh"
+
+notifications:
+  email: false
