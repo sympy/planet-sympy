@@ -15,7 +15,7 @@ correct.
 
 ## Run docker image
 
-    docker run username/planet-sympy:v1 /bin/sh -c "DEPLOY_TOKEN=XXX ./update.sh"
+    docker run -it -e DEPLOY_TOKEN=XXX test/planet-sympy:v1
 
 Where you change `XXX` for the password/key used to generate the deploykey.enc
 (see the `README` in the `keys` directory). This command will update the planet
