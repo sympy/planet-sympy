@@ -10,7 +10,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && pip install --upgrade setuptools pip \
     && hash -r \
-    && pip install --no-cache-dir feedparser
+    && pip install --no-cache-dir feedparser schedule
 
 RUN groupadd -r swuser -g 433 && \
     mkdir /home/swuser && \
