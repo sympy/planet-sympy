@@ -354,7 +354,7 @@ feed 15m http://isuruf.blogspot.com/feeds/posts/default
         define_facewidth 80
         define_faceheight 80
 
-feed 15m http://iamit.in/blog/feeds/sympy.xml
+feed 15m http://iamit.in/blog/feedsxxx/sympy.xml
         define_name Amit Kumar (aktech)
         define_face hackergotchi/aktech.jpg
         define_facewidth 80
