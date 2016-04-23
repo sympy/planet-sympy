@@ -25,4 +25,3 @@ RUN chown -R swuser:swuser planet update.sh
 USER swuser
 
 RUN mkdir testrun/
-RUN ./update.sh
