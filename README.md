@@ -11,8 +11,8 @@ correct.
 
 ## Build docker image
 
-    docker build -t username/sympy-paper:v1 .
+    docker build -t username/planet-sympy:v1 .
 
 ## Run docker image
 
-    docker run -it username/sympy-paper:v1
+    docker run -it username/planet-sympy:v1
