@@ -67,7 +67,7 @@
                     </li>
                     <li><a href="#addmore" data-toggle="modal" data-target="#addmore">Add your Blog</a>
                     </li>
-                    <li><a href="#socfeeds" data-toggle="modal" data-target="#socfeeds">Microblogging Feed</a>
+                    <li><a href="#socfeeds" data-toggle="modal" data-target="#socfeeds">Twitter Feed</a>
                     </li>
                     <li><a href="#hashtagsympy" data-toggle="modal" data-target="#hashtagsympy">#sympy</a>
                     </li>
@@ -88,7 +88,7 @@
     </nav>
 
     <div class="container">
-         __items__  
+         __items__
 
         <hr class="blueline">
         <div>
@@ -146,7 +146,7 @@
             		<center>
 	                <a class="twitter-timeline"  href="https://twitter.com/hashtag/sympy" data-widget-id="712744751670239232">#sympy Tweets</a>
                     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-          
+
 	                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                         <br>
 	                	<button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
@@ -245,7 +245,7 @@ feed 15m http://sumith1896.github.io/feeds/feed.sympy.xml
             </div>
         </div>
     </div>
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script type="text/javascript">
