@@ -1,2 +1,0 @@
-*/20 * * * * swuser echo cd /home/swuser; DEPLOY_TOKEN=XXX ./update.sh >> /home/swuser/cron.log 2>&1
-

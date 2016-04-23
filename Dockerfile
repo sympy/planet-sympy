@@ -23,15 +23,11 @@ ADD sitecustomize.py /usr/lib/python2.7/sitecustomize.py
 ADD planet planet
 ADD update.sh update.sh
 ADD deploykey.enc deploykey.enc
-RUN touch cron.log
-RUN chown -R swuser:swuser planet update.sh deploykey.enc cron.log
-ADD crontab /etc/cron.d/planet-cron
-RUN chmod 0644 /etc/cron.d/planet-cron
+ADD scheduler.py scheduler.py
+RUN chown -R swuser:swuser planet update.sh deploykey.enc scheduler.py
 
 USER swuser
 
 RUN mkdir testrun/
 
-USER root
-
-CMD cron && tail -f /home/swuser/cron.log
+CMD ./scheduler.py
