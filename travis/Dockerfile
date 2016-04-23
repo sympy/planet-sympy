@@ -2,15 +2,14 @@ FROM ubuntu:14.04
 
 RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
-        python-pip \
-        python-libxml2 \
-        openssh-client \
+        ruby-dev \
+        make \
+        gcc \
         git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && pip install --upgrade setuptools pip \
-    && hash -r \
-    && pip install --no-cache-dir feedparser
+    && gem install travis \
+    && hash -r
 
 RUN groupadd -r swuser -g 433 && \
     mkdir /home/swuser && \
@@ -19,12 +18,4 @@ RUN groupadd -r swuser -g 433 && \
     chown -R swuser:swuser /home/swuser
 WORKDIR /home/swuser
 
-ADD sitecustomize.py /usr/lib/python2.7/sitecustomize.py
-ADD planet planet
-ADD update.sh update.sh
-ADD deploykey.enc deploykey.enc
-RUN chown -R swuser:swuser planet update.sh deploykey.enc
-
 USER swuser
-
-RUN mkdir testrun/
