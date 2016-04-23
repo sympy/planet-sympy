@@ -4,6 +4,8 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
         python-pip \
         python-libxml2 \
+        openssh-client \
+        git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
     && pip install --upgrade setuptools pip \
@@ -20,7 +22,8 @@ WORKDIR /home/swuser
 ADD sitecustomize.py /usr/lib/python2.7/sitecustomize.py
 ADD planet planet
 ADD update.sh update.sh
-RUN chown -R swuser:swuser planet update.sh
+ADD deploykey.enc deploykey.enc
+RUN chown -R swuser:swuser planet update.sh deploykey.enc
 
 USER swuser
 
