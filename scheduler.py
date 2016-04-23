@@ -9,8 +9,9 @@ def job():
     os.system("./update.sh")
     print("Job finished.")
 
-schedule.every(10).seconds.do(job)
+schedule.every(20).minutes.do(job)
 
+print("Scheduler started...")
 while True:
     schedule.run_pending()
     time.sleep(1)
