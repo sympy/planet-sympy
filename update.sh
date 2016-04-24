@@ -27,6 +27,12 @@ git commit -m "${COMMIT_MESSAGE}"
 
 echo "Deploying:"
 
+if [ ! -n "$(grep "^github.com " ~/.ssh/known_hosts)" ]; then
+    mkdir ~/.ssh
+    chmod 700 ~/.ssh
+    ssh-keyscan github.com >> ~/.ssh/known_hosts
+fi
+
 set +x
 if [ "${DEPLOY_TOKEN}" = "" ]; then
     echo "Not deploying because DEPLOY_TOKEN is empty."
@@ -38,11 +44,5 @@ set -x
 chmod 600 deploykey
 eval `ssh-agent -s`
 ssh-add deploykey
-
-if [ ! -n "$(grep "^github.com " ~/.ssh/known_hosts)" ]; then
-    mkdir ~/.ssh
-    chmod 700 ~/.ssh
-    ssh-keyscan github.com >> ~/.ssh/known_hosts
-fi
 
 git push git@github.com:planet-sympy/planet.sympy.org gh-pages
