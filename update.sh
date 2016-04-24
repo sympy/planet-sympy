@@ -19,6 +19,7 @@ COMMIT_MESSAGE="Publishing site on `date "+%Y-%m-%d %H:%M:%S"`"
 git checkout -t origin/gh-pages
 rm -rf *
 cp -r ../testrun/website/* .
+cp ../git_revision .
 echo "planet.sympy.org" > CNAME
 git add -A .
 git commit -m "${COMMIT_MESSAGE}"
