@@ -20,6 +20,13 @@ def job(silence_error=True):
 schedule.every(20).minutes.do(job)
 
 print("Scheduler started...")
+print("Docker environment variables:")
+if os.environment.get("DEPLOY_TOKEN"):
+    deploy_token_display = "<non-emtpy deploy token>"
+else:
+    deploy_token_display = "<empty>"
+print("DEPLOY_TOKEN =", deploy_token_display)
+print("TRAVIS =", os.environment.get("TRAVIS"))
 if os.environ.get("TRAVIS") == "true":
     print("Running on Travis, calling job() 2x.")
     job(False)
