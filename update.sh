@@ -1,3 +1,5 @@
+#! /bin/bash
+
 set -e
 set -x
 
@@ -20,7 +22,9 @@ git checkout -t origin/gh-pages
 rm -rf *
 cp -r ../testrun/website/* .
 cp ../git_revision .
-echo "planet.sympy.org" > CNAME
+if [[ "${TRAVIS}" != "true" ]]; then
+    echo "planet.sympy.org" > CNAME
+else
 git add -A .
 git commit -m "${COMMIT_MESSAGE}"
 
@@ -34,15 +38,24 @@ if [ ! -n "$(grep "^github.com " ~/.ssh/known_hosts)" ]; then
 fi
 
 set +x
-if [ "${DEPLOY_TOKEN}" = "" ]; then
+if [[ "${DEPLOY_TOKEN}" == "" ]]; then
     echo "Not deploying because DEPLOY_TOKEN is empty."
     exit 0
 fi
-openssl aes-256-cbc -k ${DEPLOY_TOKEN} -in ../deploykey.enc -out deploykey -d
+if [[ "${TRAVIS}" == "true" ]]; then
+    # Use testing setup for Travis
+    DEPLOY_KEY_FILE=../travisdeploykey.enc
+    REPO_SUFFIX="-test"
+else
+    # Production setup
+    DEPLOY_KEY_FILE=../deploykey.end
+    REPO_SUFFIX=""
+fi
+openssl aes-256-cbc -k ${DEPLOY_TOKEN} -in ${DEPLOY_KEY_FILE} -out deploykey -d
 set -x
 
 chmod 600 deploykey
 eval `ssh-agent -s`
 ssh-add deploykey
 
-git push git@github.com:planet-sympy/planet.sympy.org gh-pages
+git push git@github.com:planet-sympy/planet.sympy.org${REPO_SUFFIX} gh-pages

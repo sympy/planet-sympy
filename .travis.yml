@@ -8,8 +8,7 @@ before_install:
   - docker ps -a
 
 script:
-  - ls
-  - docker run test/planet-sympy /bin/sh -c "./update.sh"
+  - bin/test_travis.sh
 
 env:
   global:
