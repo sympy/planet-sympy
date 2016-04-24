@@ -5,5 +5,5 @@ set -e
 # Do *not* echo commands (so that we don't reveal GH_TOKEN)
 set +x
 
-echo "docker run -e DEPLOY_TOKEN=GH_TOKEN -e TRAVIS=yes test/planet-sympy"
-docker run -it -e DEPLOY_TOKEN=${GH_TOKEN} -e TRAVIS=yes test/planet-sympy
+echo "docker run -it -e DEPLOY_TOKEN=GH_TOKEN -e TRAVIS=true test/planet-sympy"
+docker run -it -e DEPLOY_TOKEN=${GH_TOKEN} -e TRAVIS=true test/planet-sympy
