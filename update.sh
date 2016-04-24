@@ -24,7 +24,7 @@ cp -r ../testrun/website/* .
 cp ../git_revision .
 if [[ "${TRAVIS}" != "true" ]]; then
     echo "planet.sympy.org" > CNAME
-else
+fi
 git add -A .
 git commit -m "${COMMIT_MESSAGE}"
 
