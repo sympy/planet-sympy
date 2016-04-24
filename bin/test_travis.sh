@@ -6,4 +6,4 @@ set -e
 set +x
 
 echo "docker run -e DEPLOY_TOKEN=GH_TOKEN -e TRAVIS=yes test/planet-sympy"
-docker run -e DEPLOY_TOKEN=${GH_TOKEN} -e TRAVIS=yes test/planet-sympy
+docker run -it -e DEPLOY_TOKEN=${GH_TOKEN} -e TRAVIS=yes test/planet-sympy
