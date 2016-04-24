@@ -23,9 +23,10 @@ ADD sitecustomize.py /usr/lib/python2.7/sitecustomize.py
 ADD planet planet
 ADD update.sh update.sh
 ADD deploykey.enc deploykey.enc
+ADD travisdeploykey.enc travisdeploykey.enc
 ADD scheduler.py scheduler.py
 ADD .git/refs/heads/master git_revision
-RUN chown -R swuser:swuser planet update.sh deploykey.enc scheduler.py git_revision
+RUN chown -R swuser:swuser planet update.sh deploykey.enc scheduler.py git_revision travisdeploykey.enc
 
 USER swuser
 
