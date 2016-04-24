@@ -2,6 +2,9 @@
 
 # Exit on error
 set -e
+set -x
+
+echo "TOKEN: ${GH_TOKEN2}"
 # Do *not* echo commands (so that we don't reveal GH_TOKEN)
 set +x
 

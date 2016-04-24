@@ -8,7 +8,6 @@ before_install:
   - docker ps -a
 
 script:
-  - echo "TOKEN: ${GH_TOKEN2}"
   - bin/test_travis.sh
 
 notifications:
