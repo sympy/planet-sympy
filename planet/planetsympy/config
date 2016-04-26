@@ -365,3 +365,10 @@ feed 15m http://sartajsingh.me/feeds/sympy.xml
         define_face hackergotchi/leosartaj.jpg
         define_facewidth 80
         define_faceheight 80
+
+feed 15m https://rajithsays.wordpress.com/category/symengine/feed/
+        define_name Rajith Vidanaarachchi (rajithv)
+        define_face hackergotchi/rajithv.jpg
+        define_facewidth 80
+        define_faceheight 80
+
