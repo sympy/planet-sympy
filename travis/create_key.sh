@@ -4,14 +4,16 @@ set -e
 set -x
 
 GH_TOKEN=$1
+DEPLOY_TOKEN=$2
 
 echo -e  'y\n' | ssh-keygen -P "" -f travisdeploykey
-openssl aes-256-cbc -k ${GH_TOKEN} -in travisdeploykey -out ../travisdeploykey.enc
+openssl aes-256-cbc -k ${DEPLOY_TOKEN} -in travisdeploykey -out ../travisdeploykey.enc
 
 docker build -t certik/travis:v1 .
 
 docker run -i -v ${PWD}:/home/swuser/data certik/travis:v1 sh <<EOF
 set -e
 set -x
-travis encrypt -r sympy/planet-sympy DEPLOY_TOKEN=${GH_TOKEN}
+travis login --github-token=${GH_TOKEN}
+travis encrypt -r certik/planet-sympy DEPLOY_TOKEN=${DEPLOY_TOKEN}
 EOF
