@@ -14,7 +14,6 @@ def job(silence_error=True):
     if not silence_error:
         if returncode != 0:
             raise Exception("Return code is non zero.")
-    assert returncode
     print("Job finished.")
 
 schedule.every(20).minutes.do(job)
