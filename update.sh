@@ -20,7 +20,7 @@ else
     REPO_SUFFIX=""
 fi
 
-rm -rf planet.sympy.org
+rm -rf planet.sympy.org${REPO_SUFFIX}
 git clone https://github.com/planet-sympy/planet.sympy.org${REPO_SUFFIX}
 cd planet.sympy.org${REPO_SUFFIX}
 
