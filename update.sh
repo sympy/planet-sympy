@@ -36,10 +36,6 @@ if [ ! -n "$(grep "^github.com " ~/.ssh/known_hosts)" ]; then
     ssh-keyscan github.com >> ~/.ssh/known_hosts
 fi
 
-if [[ "${DEPLOY_TOKEN}" == "" ]]; then
-    echo "Not deploying because DEPLOY_TOKEN is empty."
-    exit 0
-fi
 if [[ "${TRAVIS}" == "true" ]]; then
     # Use testing setup for Travis
     DEPLOY_KEY_FILE=../travisdeploykey.enc
@@ -49,8 +45,14 @@ else
     DEPLOY_KEY_FILE=../deploykey.enc
     REPO_SUFFIX=""
 fi
-echo "DEPLOY_TOKEN=${DEPLOY_TOKEN}"
+
+set +x
+if [[ "${DEPLOY_TOKEN}" == "" ]]; then
+    echo "Not deploying because DEPLOY_TOKEN is empty."
+    exit 0
+fi
 openssl aes-256-cbc -k ${DEPLOY_TOKEN} -in ${DEPLOY_KEY_FILE} -out deploykey -d
+set -x
 
 chmod 600 deploykey
 eval `ssh-agent -s`
