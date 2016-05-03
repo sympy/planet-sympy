@@ -10,8 +10,18 @@ cd testrun
 ./rawdog -d planetsympy/ --write
 cd ..
 
+if [[ "${TRAVIS}" == "true" ]]; then
+    # Use testing setup for Travis
+    DEPLOY_KEY_FILE=../travisdeploykey.enc
+    REPO_SUFFIX="-test"
+else
+    # Production setup
+    DEPLOY_KEY_FILE=../deploykey.enc
+    REPO_SUFFIX=""
+fi
+
 rm -rf planet.sympy.org
-git clone https://github.com/planet-sympy/planet.sympy.org
+git clone https://github.com/planet-sympy/planet.sympy.org${REPO_SUFFIX}
 cd planet.sympy.org
 
 git config user.name "Docker"
@@ -34,16 +44,6 @@ if [ ! -n "$(grep "^github.com " ~/.ssh/known_hosts)" ]; then
     mkdir ~/.ssh
     chmod 700 ~/.ssh
     ssh-keyscan github.com >> ~/.ssh/known_hosts
-fi
-
-if [[ "${TRAVIS}" == "true" ]]; then
-    # Use testing setup for Travis
-    DEPLOY_KEY_FILE=../travisdeploykey.enc
-    REPO_SUFFIX="-test"
-else
-    # Production setup
-    DEPLOY_KEY_FILE=../deploykey.enc
-    REPO_SUFFIX=""
 fi
 
 set +x
