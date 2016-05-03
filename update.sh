@@ -22,7 +22,7 @@ fi
 
 rm -rf planet.sympy.org
 git clone https://github.com/planet-sympy/planet.sympy.org${REPO_SUFFIX}
-cd planet.sympy.org
+cd planet.sympy.org${REPO_SUFFIX}
 
 git config user.name "Docker"
 git config user.email "noreply@docker.org"
