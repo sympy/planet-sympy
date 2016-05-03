@@ -15,5 +15,5 @@ docker run -i certik/travis:v1 sh <<EOF
 set -e
 set -x
 travis login --github-token=${GH_TOKEN}
-travis encrypt -r certik/planet-sympy DEPLOY_TOKEN=${DEPLOY_TOKEN}
+travis encrypt -r certik/planet-sympy -i DEPLOY_TOKEN=${DEPLOY_TOKEN}
 EOF
