@@ -377,3 +377,9 @@ feed 15m http://srajangarg.github.io/feed.xml
         define_face hackergotchi/srajangarg.jpg
         define_facewidth 80
         define_faceheight 80
+
+feed 15m https://shubhamtibra.wordpress.com/feed/
+        define_name Subham Tibra (shubhamtibra)
+        define_face hackergotchi/shubham.jpg
+        define_facewidth 80
+        define_faceheight 80
