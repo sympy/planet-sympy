@@ -11,7 +11,7 @@ openssl aes-256-cbc -k ${DEPLOY_TOKEN} -in travisdeploykey -out ../travisdeployk
 
 docker build -t certik/travis:v1 .
 
-docker run -i -v ${PWD}:/home/swuser/data certik/travis:v1 sh <<EOF
+docker run -i certik/travis:v1 sh <<EOF
 set -e
 set -x
 travis login --github-token=${GH_TOKEN}
