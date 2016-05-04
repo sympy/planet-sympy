@@ -25,8 +25,8 @@ ADD update.sh update.sh
 ADD deploykey.enc deploykey.enc
 ADD travisdeploykey.enc travisdeploykey.enc
 ADD scheduler.py scheduler.py
-#ADD .git/refs/heads/master git_revision
-RUN chown -R swuser:swuser planet update.sh deploykey.enc scheduler.py travisdeploykey.enc
+ADD .git/refs/heads/master git_revision
+RUN chown -R swuser:swuser planet update.sh deploykey.enc scheduler.py travisdeploykey.enc git_revision
 
 USER swuser
 
