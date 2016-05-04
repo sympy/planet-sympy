@@ -4,9 +4,12 @@ This generates a public/private ssh keys and encrypts the private key with the T
 
 Run this with:
 
-	./create_key.sh GH_TOKEN
+	./create_key.sh GH_TOKEN DEPLOY_TOKEN
 
-Where GH_TOKEN is your personal github token (select these scopes: repo, user). I don't know why Travis needs to login to your GitHub, but it doesn't store the token anywhere.
+Where GH_TOKEN is your personal github token (select these scopes: repo, user).
+I don't know why Travis needs to login to your GitHub, but it doesn't store the
+token anywhere. The DEPLOY_TOKEN is a random password, that will be used to
+encrypt the private key.
 
 If it runs successfully, it will generate the following files:
 
