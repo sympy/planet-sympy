@@ -389,3 +389,9 @@ feed 15m http://s-hacker.info/blog/gsoc16/feeds/sympy.xml
         define_face hackergotchi/shekhar.jpg
         define_facewidth 80
         define_faceheight 79
+
+feed 15m https://gxyd.github.io/feeds/atom.xml
+        define_name Gaurav Dhingra (gxyd)
+        define_face hackergotchi/gxyd.jpg
+        define_facewidth 80
+        define_faceheight 80
