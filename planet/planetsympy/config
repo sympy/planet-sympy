@@ -401,3 +401,9 @@ feed 15m https://sampadblog.wordpress.com/feed/
         define_face hackergotchi/sampad.jpg
         define_facewidth 80
         define_faceheight 80
+
+feed 15m http://nishnik.github.io/feed.xml
+        define_name Nishant Nikhil (nishnik)
+        define_face hackergotchi/nishnik.jpg
+        define_facewidth 80
+        define_faceheight 80
