@@ -27,7 +27,7 @@
 			    			<td style="vertical-align:bottom;">
 			    				<div class="row">
 							    	<div class="col-md-12 col-xs-12">
-							    		<h4><a class="boxh2" href="__url__">__title_no_link__</a></h4>
+							    		<h4><a class="boxh2" href="__url__">__name__: __title_no_link__</a></h4>
 							    	</div>
 							    </div>
 			    			</td>
