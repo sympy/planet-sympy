@@ -9,12 +9,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # rawdog_rss is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with rawdog_rss; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -168,8 +168,8 @@ class RSS_Feed:
                         #ervin thinks we should have project news in the feed
                         if itembits["feedclass"] == "news":
                             toAdd = True
-            
-            if toAdd: 
+
+            if toAdd:
                 xml_article = channel.newChild(None, 'item', None)
                 self.article_to_xml(xml_article, rawdog, config, article)
 
