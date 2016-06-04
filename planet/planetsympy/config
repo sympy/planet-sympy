@@ -384,9 +384,9 @@ feed 15m https://shubhamtibra.wordpress.com/feed/
         define_facewidth 80
         define_faceheight 80
 
-feed 15m http://s-hacker.info/blog/gsoc16/feeds/sympy.xml
+feed 15m http://shekharrajak.github.io/feed.xml
         define_name Shekhar Prasad Rajak (shekharrajak)
-        define_face hackergotchi/shekhar.jpg
+        define_face hackergotchi/shekharrajak.jpg
         define_facewidth 80
         define_faceheight 79
 
