@@ -7,5 +7,5 @@ set -x
 # Do *not* echo commands (so that we don't reveal DEPLOY_TOKEN)
 set +x
 
-echo 'docker run -e DEPLOY_TOKEN=${DEPLOY_TOKEN} -e TRAVIS=true test/planet-sympy'
-docker run -e DEPLOY_TOKEN=${DEPLOY_TOKEN} -e TRAVIS=true test/planet-sympy
+echo 'docker run -e SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" -e TESTING=true test/planet-sympy'
+docker run -e SSH_PRIVATE_KEY="${SSH_PRIVATE_KEY}" -e TESTING=true test/planet-sympy

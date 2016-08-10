@@ -3,24 +3,20 @@
 set -e
 set -x
 
-rm -rf testrun/*
 cp -r planet/* testrun/
 cd testrun
 ./rawdog -d planetsympy/ --update
 ./rawdog -d planetsympy/ --write
 cd ..
 
-if [[ "${TRAVIS}" == "true" ]]; then
+if [[ "${TESTING}" == "true" ]]; then
     # Use testing setup for Travis
-    DEPLOY_KEY_FILE=../travisdeploykey.enc
     REPO_SUFFIX="-test"
 else
     # Production setup
-    DEPLOY_KEY_FILE=../deploykey.enc
     REPO_SUFFIX=""
 fi
 
-rm -rf planet.sympy.org${REPO_SUFFIX}
 git clone https://github.com/planet-sympy/planet.sympy.org${REPO_SUFFIX}
 cd planet.sympy.org${REPO_SUFFIX}
 
@@ -31,7 +27,7 @@ COMMIT_MESSAGE="Publishing site on `date "+%Y-%m-%d %H:%M:%S"`"
 git checkout -t origin/gh-pages
 rm -rf *
 cp -r ../testrun/website/* .
-if [[ "${TRAVIS}" != "true" ]]; then
+if [[ "${TESTING}" != "true" ]]; then
     echo "planet.sympy.org" > CNAME
 fi
 git add -A .
@@ -40,22 +36,30 @@ git commit -m "${COMMIT_MESSAGE}"
 
 echo "Deploying:"
 
-if [ ! -n "$(grep "^github.com " ~/.ssh/known_hosts)" ]; then
-    mkdir ~/.ssh
-    chmod 700 ~/.ssh
-    ssh-keyscan github.com >> ~/.ssh/known_hosts
-fi
+mkdir ~/.ssh
+chmod 700 ~/.ssh
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+eval `ssh-agent -s`
 
 set +x
-if [[ "${DEPLOY_TOKEN}" == "" ]]; then
-    echo "Not deploying because DEPLOY_TOKEN is empty."
+if [[ "${SSH_PRIVATE_KEY}" == "" ]]; then
+    echo "Not deploying because SSH_PRIVATE_KEY is empty."
     exit 0
 fi
-openssl aes-256-cbc -k ${DEPLOY_TOKEN} -in ${DEPLOY_KEY_FILE} -out deploykey -d
-set -x
+# Generate the private/public key pair using:
+#
+#     ssh-keygen -f deploy_key -N ""
+#
+# then set the $SSH_PRIVATE_KEY environment variable in the CI (Travis-CI,
+# GitLab-CI, ...) to the base64 encoded private key:
+#
+#     cat deploy_key | base64 -w0
+#
+# and add the public key `deploy_key.pub` into the target git repository (with
+# write permissions).
 
-chmod 600 deploykey
-eval `ssh-agent -s`
-ssh-add deploykey
+ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 --decode)
+set -x
 
 git push git@github.com:planet-sympy/planet.sympy.org${REPO_SUFFIX} gh-pages
