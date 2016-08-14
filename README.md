@@ -15,9 +15,8 @@ correct.
 
 ## Run docker image
 
-    docker run -d -e DEPLOY_TOKEN=XXX test/planet-sympy:v1
+    docker run -d -e SSH_PRIVATE_KEY=XXX test/planet-sympy:v1
 
-Where you change `XXX` for the password/key used to generate the
-`deploykey.enc` (see the `README` in the `keys` directory). This command will
+Where you change `XXX` for a base64 encoded private ssh key. This command will
 update the planet and push the new files into the
 https://github.com/planet-sympy/planet.sympy.org repository.
