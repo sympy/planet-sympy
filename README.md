@@ -42,7 +42,9 @@ GitLab-CI, ...) to the base64 encoded private key:
 
      cat deploy_key | base64 -w0
 
-and add the public key `deploy_key.pub` into the target git repository (with
-write permissions).
+and add the public key `deploy_key.pub` into the target git repository (either
+`planet-sympy/planet.sympy.org` or `planet-sympy/planet.sympy.org-test`), with
+write permissions.
 
-The docker image is periodically run by GitLab-CI at: https://gitlab.com/certik/planet-sympy-updater
+The docker image is periodically pulled and run by GitLab-CI at:
+https://gitlab.com/certik/planet-sympy-updater
