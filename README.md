@@ -9,6 +9,15 @@ correct.
 
 # Development
 
+To build the site, run
+
+    ./build.sh
+
+This requires Python 2 and some libraries.
+
+# Deployment
+
+
 ## Build docker image
 
     docker build -t username/planet-sympy:v1 .
