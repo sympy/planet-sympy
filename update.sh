@@ -18,10 +18,10 @@ cd planet.sympy.org${REPO_SUFFIX}
 
 git config user.name "Docker"
 git config user.email "noreply@docker.org"
-COMMIT_MESSAGE="Publishing site on `date "+%Y-%m-%d %H:%M:%S"`"
+COMMIT_MESSAGE="Publishing site on $(date "+%Y-%m-%d %H:%M:%S")"
 
 git checkout -t origin/gh-pages
-rm -rf *
+rm -rf ./*
 cp -r ../build/website/* .
 if [[ "${TESTING}" != "true" ]]; then
     echo "planet.sympy.org" > CNAME
@@ -36,7 +36,7 @@ mkdir ~/.ssh
 chmod 700 ~/.ssh
 ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-eval `ssh-agent -s`
+eval "$(ssh-agent -s)"
 
 set +x
 if [[ "${SSH_PRIVATE_KEY}" == "" ]]; then
