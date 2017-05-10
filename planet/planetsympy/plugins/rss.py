@@ -107,14 +107,16 @@ class RSS_Feed:
         guid = xml_article.newChild(None, 'guid', string_to_html(id, config))
         guid.setProp('isPermaLink', 'false')
 
+        author = escape(self.feed_name(rawdog.feeds[article.feed], config))
+        xml_article.newChild(None, 'author', author)
+
         title = escape(self.feed_name(rawdog.feeds[article.feed], config))
         s = detail_to_html(entry_info.get("title_detail"), True, config)
         if s is not None:
             title = s.encode('utf8')
+        title = author + ": " + title
         xml_article.newChild(None, 'title', title)
 
-        author = escape(self.feed_name(rawdog.feeds[article.feed], config))
-        xml_article.newChild(None, 'author', author)
 
         if article.date is not None:
             date = rfc822_date(gmtime(article.date))
