@@ -3,11 +3,7 @@
 set -e
 set -x
 
-cp -r planet/* testrun/
-cd testrun
-./rawdog -d planetsympy/ --update
-./rawdog -d planetsympy/ --write
-cd ..
+./build.sh
 
 if [[ "${TESTING}" == "true" ]]; then
     # Use testing setup for Travis
@@ -26,7 +22,7 @@ COMMIT_MESSAGE="Publishing site on `date "+%Y-%m-%d %H:%M:%S"`"
 
 git checkout -t origin/gh-pages
 rm -rf *
-cp -r ../testrun/website/* .
+cp -r ../build/website/* .
 if [[ "${TESTING}" != "true" ]]; then
     echo "planet.sympy.org" > CNAME
 fi
