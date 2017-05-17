@@ -425,3 +425,9 @@ feed 15m http://ShikharJ.github.io/feed.xml
         define_face hackergotchi/ShikharJ.jpg
         define_facewidth 80
         define_faceheight 80
+
+feed 15m http://valglad.github.io/feed.xml
+        define_name Valeriia Gladkova (valglad)
+        define_face hackergotchi/valglad.jpg
+        define_facewidth 80
+        define_faceheight 80
