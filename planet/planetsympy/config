@@ -431,3 +431,9 @@ feed 15m http://valglad.github.io/feed.xml
         define_face hackergotchi/valglad.jpg
         define_facewidth 80
         define_faceheight 80
+
+feed 15m http://ranjithkumar007.github.io/feed.xml
+        define_name Ranjith Kumar (ranjithkumar007)
+        define_face hackergotchi/ranjithkumar007.png
+        define_facewidth 80
+        define_faceheight 80
