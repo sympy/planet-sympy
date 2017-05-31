@@ -3,14 +3,14 @@
 # Add your blog
 
 #If you are a SymPy contributor you can have your blog on Planet
-#SymPy. Blog content can be SymPy/SymEngine/SciPy/Python themed, 
-#English language and not liable to offend. If you have a general 
-#blog you may want to set up a tag and subscribe the feed for that 
+#SymPy. Blog content can be SymPy/SymEngine/SciPy/Python themed,
+#English language and not liable to offend. If you have a general
+#blog you may want to set up a tag and subscribe the feed for that
 #tag only to Planet SymPy.
 
 #To have your blog added file an issue on planet.sympy.org GitHub
-#repository listing your name, GitHub handle (if you have one), 
-#RSS or Atom feed and what you do in SymPy. Attach a photo of your 
+#repository listing your name, GitHub handle (if you have one),
+#RSS or Atom feed and what you do in SymPy. Attach a photo of your
 #face for hackergotchi.
 
 #Alternatively, Planet SymPy is kept in GitHub. If you have an
@@ -29,7 +29,7 @@
 
 #If you want to add a Twitter microblog to the Microblogging sidebar
 #add define_microblog true and follow your name with
-#[twitter]. 
+#[twitter].
 
 #Planet SymPy Guidelines
 
@@ -346,7 +346,7 @@ feed 15m http://asmeurer.github.io/blog/rss.xml
         define_name Aaron Meurer (asmeurer)
         define_face hackergotchi/asmeurer.jpg
         define_facewidth 80
-        define_faceheight 80    
+        define_faceheight 80
 
 feed 15m http://isuruf.blogspot.com/feeds/posts/default
         define_name Isuru Fernando (isuruf)
@@ -390,7 +390,7 @@ feed 15m http://shekharrajak.github.io/feed.xml
         define_facewidth 80
         define_faceheight 79
 
-feed 15m https://gxyd.github.io/feeds/atom.xml
+feed 15m https://gxyd.github.io/atom.xml
         define_name Gaurav Dhingra (gxyd)
         define_face hackergotchi/gxyd.jpg
         define_facewidth 80
@@ -435,6 +435,12 @@ feed 15m http://valglad.github.io/feed.xml
 feed 15m http://ranjithkumar007.github.io/feed.xml
         define_name Ranjith Kumar (ranjithkumar007)
         define_face hackergotchi/ranjithkumar007.png
+        define_facewidth 80
+        define_faceheight 80
+
+feed 15m https://arif7blog.wordpress.com/feed
+        define_name Arif Ahmed (ArifAhmed1995)
+        define_face hackergotchi/arifahmed.jpeg
         define_facewidth 80
         define_faceheight 80
 
