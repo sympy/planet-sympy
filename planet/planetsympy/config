@@ -390,7 +390,7 @@ feed 15m http://shekharrajak.github.io/feed.xml
         define_facewidth 80
         define_faceheight 79
 
-feed 15m https://gxyd.github.io/feeds/atom.xml
+feed 15m https://gxyd.github.io/atom.xml
         define_name Gaurav Dhingra (gxyd)
         define_face hackergotchi/gxyd.jpg
         define_facewidth 80
