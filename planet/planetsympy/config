@@ -449,3 +449,9 @@ feed 15m https://parsoyaarihant.github.io/blog/feed.xml
 		define_face hackergotchi/parsoyaarihant.jpeg
 		define_facewidth 80
 		define_faceheight 80
+
+feed 15m http://bjodah.github.io/blog/rss.xml
+        define_name Bjoern Dahlgren (bjodah)
+        define_face hackergotchi/bjodah.jpg
+        define_facewidth 80
+        define_faceheight 80
