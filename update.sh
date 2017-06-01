@@ -3,6 +3,11 @@
 set -e
 set -x
 
+# Switch locale to utf8, otherwise rawdog fails to load unicode names
+export LC_ALL="C.UTF-8"
+export LC_CTYPE="C.UTF-8"
+
+
 ./build.sh
 
 if [[ "${TESTING}" == "true" ]]; then
