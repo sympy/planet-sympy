@@ -455,3 +455,9 @@ feed 15m http://bjodah.github.io/blog/rss.xml
         define_face hackergotchi/bjodah.jpg
         define_facewidth 80
         define_faceheight 80
+
+feed 15m http://nesar2017.wordpress.com/feed
+        define_name Abdullah Javed Nesar (Abdullahjavednesar)
+        define_face hackergotchi/Abdullahjavednesar.jpg
+        define_facewidth 80
+        define_faceheight 80
