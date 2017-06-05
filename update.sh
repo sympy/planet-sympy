@@ -31,6 +31,7 @@ cp -r ../build/website/* .
 if [[ "${TESTING}" != "true" ]]; then
     echo "planet.sympy.org" > CNAME
 fi
+touch .nojekyll
 git add -A .
 git commit -m "${COMMIT_MESSAGE}"
 
