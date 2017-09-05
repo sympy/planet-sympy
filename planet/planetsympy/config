@@ -464,6 +464,6 @@ feed 15m http://nesar2017.wordpress.com/feed
 
 feed 15m http://szymag.github.io/feed.xml
         define_name Szymon Mieszczak (szymag)
-        define_face hackergotchi/
+        define_face hackergotchi/szymag.jpg
         define_facewidth 80
         define_faceheight 80
