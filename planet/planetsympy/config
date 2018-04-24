@@ -467,3 +467,9 @@ feed 15m http://szymag.github.io/feed.xml
         define_face hackergotchi/szymag.jpg
         define_facewidth 80
         define_faceheight 80
+
+feed 15m http://sidhantnagpal.github.io/rss-gsoc.xml
+        define_name Sidhant Nagpal (sidhantnagpal)
+        define_face hackergotchi/sidhantnagpal.jpg
+        define_facewidth 80
+        define_faceheight 80
