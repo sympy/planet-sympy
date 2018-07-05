@@ -419,6 +419,12 @@ feed 15m http://kshitij10496.github.io/feed.xml
         define_face hackergotchi/kshitij10496.jpg
         define_facewidth 80
         define_faceheight 80
+	
+feed 15m http://ravicharann.github.io/blog/feed.sympy.xml
+        define_name Ravicharan (RavicharanN)
+        define_face hackergotchi/ravicharan.jpg
+        define_facewidth 80
+        define_faceheight 80
 
 feed 15m http://ShikharJ.github.io/feed.xml
         define_name Shikhar Jaiswal (ShikharJ)
@@ -471,5 +477,23 @@ feed 15m http://szymag.github.io/feed.xml
 feed 15m http://yathartha22.github.io/feed.sympy.xml
         define_name Yathartha Joshi (Yathartha22)
         define_face hackergotchi/yathartha.jpg
+        define_facewidth 80
+        define_faceheight 80
+        
+feed 15m https://singhjashan.wordpress.com/feed
+        define_name Jashanpreet Singh Sraw (jashan498)
+        define_face hackergotchi/jashan498.jpg
+        define_facewidth 80
+        define_faceheight 80
+
+feed 15m http://ashishkg0022.blogspot.in/feeds/posts/default?alt=rss
+        define_name Ashish Kumar Gaurav (ashishkg0022)
+        define_face hackergotchi/ashishkg0022.jpg
+        define_facewidth 80
+        define_faceheight 80
+
+feed 15m https://nkhlpappu.wordpress.com/tag/sympy/feed
+        define_name Nikhil Pappu (NikhilPappu)
+        define_face hackergotchi/NikhilPappu.jpeg
         define_facewidth 80
         define_faceheight 80
