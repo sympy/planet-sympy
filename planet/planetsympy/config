@@ -342,7 +342,7 @@ feed 15m http://sumith1896.github.io/feeds/feed.sympy.xml
         define_facewidth 80
         define_faceheight 80
 
-feed 15m http://asmeurer.github.io/blog/rss.xml
+feed 15m https://www.asmeurer.com/blog/rss.xml
         define_name Aaron Meurer (asmeurer)
         define_face hackergotchi/asmeurer.jpg
         define_facewidth 80
@@ -357,12 +357,6 @@ feed 15m http://isuruf.blogspot.com/feeds/posts/default
 feed 15m http://iamit.in/blog/feeds/sympy.xml
         define_name Amit Kumar (aktech)
         define_face hackergotchi/aktech.jpg
-        define_facewidth 80
-        define_faceheight 80
-
-feed 15m http://sartajsingh.me/feeds/sympy.xml
-        define_name Sartaj Singh (leosartaj)
-        define_face hackergotchi/leosartaj.jpg
         define_facewidth 80
         define_faceheight 80
 
@@ -414,19 +408,19 @@ feed 15m http://jbm950.github.io/feed.xml
         define_facewidth 80
         define_faceheight 80
 
-feed 15m http://kshitij10496.github.io/feed.xml
+feed 15m https://kshitij10496.github.io/feed.xml
         define_name Kshitij Saraogi(kshitij10496)
         define_face hackergotchi/kshitij10496.jpg
         define_facewidth 80
         define_faceheight 80
 
-feed 15m http://ShikharJ.github.io/feed.xml
+feed 15m https://shikharj.github.io/feed.xml
         define_name Shikhar Jaiswal (ShikharJ)
         define_face hackergotchi/ShikharJ.jpg
         define_facewidth 80
         define_faceheight 80
 
-feed 15m http://valglad.github.io/feed.xml
+feed 15m https://valglad.github.io/feed.xml
         define_name Valeriia Gladkova (valglad)
         define_face hackergotchi/valglad.jpg
         define_facewidth 80
@@ -438,7 +432,7 @@ feed 15m http://ranjithkumar007.github.io/feed.xml
         define_facewidth 80
         define_faceheight 80
 
-feed 15m https://arif7blog.wordpress.com/feed
+feed 15m https://arif7blog.wordpress.com/feed/
         define_name Arif Ahmed (ArifAhmed1995)
         define_face hackergotchi/arifahmed.jpeg
         define_facewidth 80
@@ -450,19 +444,19 @@ feed 15m https://parsoyaarihant.github.io/blog/feed.xml
 		define_facewidth 80
 		define_faceheight 80
 
-feed 15m http://bjodah.github.io/blog/rss.xml
+feed 15m https://bjodah.github.io/blog/rss.xml
         define_name Björn Dahlgren (bjodah)
         define_face hackergotchi/bjodah.jpg
         define_facewidth 80
         define_faceheight 80
 
-feed 15m http://nesar2017.wordpress.com/feed
+feed 15m https://nesar2017.wordpress.com/feed/
         define_name Abdullah Javed Nesar (Abdullahjavednesar)
         define_face hackergotchi/Abdullahjavednesar.jpg
         define_facewidth 80
         define_faceheight 80
 
-feed 15m http://szymag.github.io/feed.xml
+feed 15m https://szymag.github.io/feed.xml
         define_name Szymon Mieszczak (szymag)
         define_face hackergotchi/szymag.jpg
         define_facewidth 80
