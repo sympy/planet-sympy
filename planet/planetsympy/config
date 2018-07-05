@@ -419,6 +419,12 @@ feed 15m http://kshitij10496.github.io/feed.xml
         define_face hackergotchi/kshitij10496.jpg
         define_facewidth 80
         define_faceheight 80
+	
+feed 15m http://ravicharann.github.io/blog/feed.sympy.xml
+        define_name Ravicharan (RavicharanN)
+        define_face hackergotchi/ravicharan.jpg
+        define_facewidth 80
+        define_faceheight 80
 
 feed 15m http://ShikharJ.github.io/feed.xml
         define_name Shikhar Jaiswal (ShikharJ)
