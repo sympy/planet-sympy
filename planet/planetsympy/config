@@ -474,6 +474,12 @@ feed 15m http://szymag.github.io/feed.xml
         define_facewidth 80
         define_faceheight 80
 
+feed 15m http://yathartha22.github.io/feed.sympy.xml
+        define_name Yathartha Joshi (Yathartha22)
+        define_face hackergotchi/yathartha.jpg
+        define_facewidth 80
+        define_faceheight 80
+        
 feed 15m https://singhjashan.wordpress.com/feed
         define_name Jashanpreet Singh Sraw (jashan498)
         define_face hackergotchi/jashan498.jpg
