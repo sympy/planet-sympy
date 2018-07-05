@@ -473,3 +473,9 @@ feed 15m http://ashishkg0022.blogspot.in/feeds/posts/default?alt=rss
         define_face hackergotchi/ashishkg0022.jpg
         define_facewidth 80
         define_faceheight 80
+
+feed 15m https://nkhlpappu.wordpress.com/tag/sympy/feed
+        define_name Nikhil Pappu (NikhilPappu)
+        define_face hackergotchi/NikhilPappu.jpeg
+        define_facewidth 80
+        define_faceheight 80
