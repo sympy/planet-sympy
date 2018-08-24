@@ -56,4 +56,4 @@ and add the public key `deploy_key.pub` into the target git repository (either
 write permissions.
 
 The docker image is periodically pulled and run by GitLab-CI at:
-https://gitlab.com/certik/planet-sympy-updater, here is a direct link for the latest builds, so that you can check the status of the latest update of the `planet.sympy.org` website: https://gitlab.com/certik/planet-sympy-updater/pipelines.
+https://gitlab.com/sympy/planet-sympy-updater, here is a direct link for the latest builds, so that you can check the status of the latest update of the `planet.sympy.org` website: https://gitlab.com/sympy/planet-sympy-updater/pipelines.
