@@ -438,12 +438,6 @@ feed 15m http://ranjithkumar007.github.io/feed.xml
         define_facewidth 80
         define_faceheight 80
 
-feed 15m https://arif7blog.wordpress.com/feed/
-        define_name Arif Ahmed (ArifAhmed1995)
-        define_face hackergotchi/arifahmed.jpeg
-        define_facewidth 80
-        define_faceheight 80
-
 feed 15m https://parsoyaarihant.github.io/blog/feed.xml
 		define_name Arihant Parsoya (parsoyaarihant)
 		define_face hackergotchi/parsoyaarihant.jpeg
