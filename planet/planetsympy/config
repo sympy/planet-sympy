@@ -497,3 +497,9 @@ feed 15m https://czgdp1807.github.io/feed.xml
         define_face hackergotchi/GagandeepSingh.jpeg
         define_facewidth 80
         define_faceheight 80
+
+feed 15m http://jmig5776.github.io/feed.sympy.xml
+        define_name Jogi Miglani (jmig5776)
+        define_face hackergotchi/jmig5776.jpg
+        define_facewidth 80
+        define_faceheight 80
