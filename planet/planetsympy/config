@@ -506,6 +506,6 @@ feed 15m http://jmig5776.github.io/feed.sympy.xml
 
 feed 15m http://shubhamkjha.github.io/sympy_feed.xml
         define_name Shubham Kumar Jha (ShubhamKJha)
-        define_face hackergotchi/shubhamkjha.jpeg
+        define_face hackergotchi/shubhamkjha.jpg
         define_facewidth 80
         define_faceheight 80
