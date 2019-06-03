@@ -1,0 +1,16 @@
+image: docker:git
+
+services:
+  - docker:dind
+
+stages:
+  - build
+
+before_script:
+  - apk update
+  - apk add bash
+
+build_planet_sympy:
+  stage: build
+  script:
+    - bash build_image.sh
