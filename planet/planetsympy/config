@@ -516,6 +516,12 @@ feed 15m http://shubhamkjha.github.io/sympy_feed.xml
         define_facewidth 80
         define_faceheight 80
 
+feed 15m http://divyanshu132.github.io/feed.sympy.xml
+        define_name Divyanshu Thakur (divyanshu132)
+        define_face hackergotchi/divyanshu132.jpg
+        define_facewidth 80
+        define_faceheight 80
+
 feed 15m http://ritesh99rakesh.github.io/feed.xml
         define_name Ritesh Kumar (ritesh99rakesh)
         define_face hackergotchi/ritesh99rakesh.jpg
