@@ -516,6 +516,12 @@ feed 15m http://shubhamkjha.github.io/sympy_feed.xml
         define_facewidth 80
         define_faceheight 80
 
+feed 15m https://anpandey.github.io/atom-sympy.xml
+        define_name Ankit Pandey (anpandey)
+        define_face hackergotchi/anpandey.jpg
+        define_facewidth 80
+        define_faceheight 80
+
 feed 15m https://www.kangzhiq.com/tag/sympy/feed/
         define_name Zhiqi KANG (kangzhiq)
         define_face hackergotchi/kangzhiq.jpg
