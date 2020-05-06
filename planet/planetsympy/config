@@ -539,9 +539,15 @@ feed 15m https://www.kangzhiq.com/tag/sympy/feed/
         define_face hackergotchi/kangzhiq.jpg
         define_facewidth 80
         define_faceheight 80
-        
+
 feed 15m https://sc0rpi0n101.github.io/categories/gsoc/index.xml
         define_name Nikhil Maan (Sc0rpi0n101)
         define_face hackergotchi/Nikhil_Maan.jpg
+        define_facewidth 80
+        define_faceheight 80
+
+feed 15m https://smit-create.github.io/feed.xml
+        define_name Smit Lunagariya (Smit-create)
+        define_face hackergotchi/Smitlunagariya.jpg
         define_facewidth 80
         define_faceheight 80
