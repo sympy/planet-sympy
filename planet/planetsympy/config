@@ -557,3 +557,9 @@ feed 15m https://namannimmo10.github.io/emerald/atom.xml
 	define_face hackergotchi/namannimmo10.jpg
 	define_facewidth 80
 	define_faceheight 80
+
+feed 15m https://sachin-4099.github.io/feed.sympy.xml
+        define_name Sachin Agarwal (sachin-4099)
+        define_face hackergotchi/sachin-4099.jpg
+        define_facewidth 80
+        define_faceheight 80
