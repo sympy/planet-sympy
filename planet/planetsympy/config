@@ -569,3 +569,9 @@ feed 15m https://friyaz.github.io/feed.sympy.xml
         define_face hackergotchi/friyaz.jpg
         define_facewidth 80
         define_faceheight 80        
+
+feed 15m http://abhinav28071999.github.io/feed.xml
+        define_name Abhinav Anand (abhinav28071999)
+        define_face hackergotchi/abhinav28071999.jpg
+        define_facewidth 80
+        define_faceheight 80
