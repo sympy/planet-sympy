@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 import os
 import subprocess
@@ -14,12 +14,13 @@ def job(silence_error=False):
             raise Exception("Return code is non zero.")
     print("Job finished.")
 
+
 print("Docker environment variables:")
 if os.environ.get("SSH_PRIVATE_KEY"):
     deploy_token_display = "<non-emtpy ssh private key>"
 else:
     deploy_token_display = "<empty>"
-print("SSH_PRIVATE_KEY =", deploy_token_display)
-print("TESTING =", os.environ.get("TESTING"))
+print(("SSH_PRIVATE_KEY =", deploy_token_display))
+print(("TESTING =", os.environ.get("TESTING")))
 print("Running job()")
 job()

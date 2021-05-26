@@ -1,14 +1,14 @@
-FROM ubuntu:14.04
+FROM ubuntu:20.04
 
-RUN apt-get update \
+RUN apt-get update -y \
+    && apt-get upgrade -y \
     && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
-        python-pip \
-        python-libxml2 \
+        python3-pip \
         openssh-client \
         git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && pip install --upgrade setuptools pip \
+    && pip3 install --upgrade setuptools pip lxml \
     && hash -r \
     && pip install --no-cache-dir feedparser schedule
 

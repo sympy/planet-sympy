@@ -40,10 +40,10 @@
 # If you're using rawdog to produce a planet page, you'll probably want to have
 # "sortbyfeeddate true" in your config file too.
 
-import os, time, cgi
-import htmlentitydefs
+import os, time, html
+import html.entities
 import rawdoglib.plugins, rawdoglib.rawdog
-import libxml2
+import lxml
 
 from rawdoglib.rawdog import detail_to_html, string_to_html
 from time import gmtime, strftime
@@ -54,8 +54,8 @@ from xml.sax.saxutils import escape, unescape
 # &aacute; in define_name if they don't know how to input Unicode characters.
 # HACK: The unicode characters currently must be re-encoded as utf-8.
 htmlchars = {}
-for k, v in htmlentitydefs.name2codepoint.items():
-    htmlchars['&%s;' % k] = unichr(v).encode('utf8')
+for k, v in list(html.entities.name2codepoint.items()):
+    htmlchars['&%s;' % k] = chr(v).encode('utf8')
 
 def rfc822_date(tm):
     """Format a GMT timestamp as returned by time.gmtime() in RFC822 format.
@@ -135,101 +135,104 @@ class RSS_Feed:
         return True
 
     def write_rss(self, rawdog, config, articles):
-        doc = libxml2.newDoc("1.0")
+        return True # Added
+    #     doc = lxml.newDoc("1.0")
 
-        rss = doc.newChild(None, 'rss', None)
-        rss.setProp('version', "2.0")
-        rss.setProp('xmlns:dc', "http://purl.org/dc/elements/1.1/")
-        rss.setProp('xmlns:atom', 'http://www.w3.org/2005/Atom')
+    #     rss = doc.newChild(None, 'rss', None)
+    #     rss.setProp('version', "2.0")
+    #     rss.setProp('xmlns:dc', "http://purl.org/dc/elements/1.1/")
+    #     rss.setProp('xmlns:atom', 'http://www.w3.org/2005/Atom')
 
-        channel = rss.newChild(None, 'channel', None)
-        channel.newChild(None, 'title', escape(self.options["xmltitle"]))
-        channel.newChild(None, 'link', escape(self.options["xmllink"]))
-        channel.newChild(None, 'language', escape(self.options["xmllanguage"]))
-        channel.newChild(None, 'description', escape(self.options["xmldescription"]))
+    #     channel = rss.newChild(None, 'channel', None)
+    #     channel.newChild(None, 'title', escape(self.options["xmltitle"]))
+    #     channel.newChild(None, 'link', escape(self.options["xmllink"]))
+    #     channel.newChild(None, 'language', escape(self.options["xmllanguage"]))
+    #     channel.newChild(None, 'description', escape(self.options["xmldescription"]))
 
-        atom_link = channel.newChild(None, 'atom:link', None)
-        atom_link.setProp('href', self.options["xmlurl"])
-        atom_link.setProp('rel', 'self')
-        atom_link.setProp('type', 'application/rss+xml')
+    #     atom_link = channel.newChild(None, 'atom:link', None)
+    #     atom_link.setProp('href', self.options["xmlurl"])
+    #     atom_link.setProp('rel', 'self')
+    #     atom_link.setProp('type', 'application/rss+xml')
 
-        try:
-            maxarticles = int(self.options["xmlmaxarticles"])
-        except ValueError:
-            maxarticles = len(articles)
-        for article in articles[:maxarticles]:
-            #Planet KDE addition, don't include articles in a feedclass
-            feed = rawdog.feeds[article.feed]
-            itembits = {}
-            toAdd = True;
-            for name, value in feed.args.items():
-                if name.startswith("define_"):
-                    itembits[name[7:]] = value
-                    if "feedclass" in itembits:
-                        toAdd = False
-                        #ervin thinks we should have project news in the feed
-                        if itembits["feedclass"] == "news":
-                            toAdd = True
+    #     try:
+    #         maxarticles = int(self.options["xmlmaxarticles"])
+    #     except ValueError:
+    #         maxarticles = len(articles)
+    #     for article in articles[:maxarticles]:
+    #         #Planet KDE addition, don't include articles in a feedclass
+    #         feed = rawdog.feeds[article.feed]
+    #         itembits = {}
+    #         toAdd = True;
+    #         for name, value in list(feed.args.items()):
+    #             if name.startswith("define_"):
+    #                 itembits[name[7:]] = value
+    #                 if "feedclass" in itembits:
+    #                     toAdd = False
+    #                     #ervin thinks we should have project news in the feed
+    #                     if itembits["feedclass"] == "news":
+    #                         toAdd = True
 
-            if toAdd:
-                xml_article = channel.newChild(None, 'item', None)
-                self.article_to_xml(xml_article, rawdog, config, article)
+    #         if toAdd:
+    #             xml_article = channel.newChild(None, 'item', None)
+    #             self.article_to_xml(xml_article, rawdog, config, article)
 
-        doc.saveFormatFile(self.options["outputxml"], 1)
-        doc.freeDoc()
+    #     doc.saveFormatFile(self.options["outputxml"], 1)
+    #     doc.freeDoc()
 
     def write_foaf(self, rawdog, config):
-        doc = libxml2.newDoc("1.0")
+        return True # Added
+    #     doc = lxml.newDoc("1.0")
 
-        xml = doc.newChild(None, 'rdf:RDF', None)
-        xml.setProp('xmlns:rdf', "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
-        xml.setProp('xmlns:rdfs', "http://www.w3.org/2000/01/rdf-schema#")
-        xml.setProp('xmlns:foaf', "http://xmlns.com/foaf/0.1/")
-        xml.setProp('xmlns:rss', "http://purl.org/rss/1.0/")
-        xml.setProp('xmlns:dc', "http://purl.org/dc/elements/1.1/")
+    #     xml = doc.newChild(None, 'rdf:RDF', None)
+    #     xml.setProp('xmlns:rdf', "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
+    #     xml.setProp('xmlns:rdfs', "http://www.w3.org/2000/01/rdf-schema#")
+    #     xml.setProp('xmlns:foaf', "http://xmlns.com/foaf/0.1/")
+    #     xml.setProp('xmlns:rss', "http://purl.org/rss/1.0/")
+    #     xml.setProp('xmlns:dc', "http://purl.org/dc/elements/1.1/")
 
-        group = xml.newChild(None, 'foaf:Group', None)
-        group.newChild(None, 'foaf:name', escape(self.options["xmltitle"]))
-        group.newChild(None, 'foaf:homepage', escape(self.options["xmllink"]))
+    #     group = xml.newChild(None, 'foaf:Group', None)
+    #     group.newChild(None, 'foaf:name', escape(self.options["xmltitle"]))
+    #     group.newChild(None, 'foaf:homepage', escape(self.options["xmllink"]))
 
-        for url in sorted(rawdog.feeds.keys()):
-            member = group.newChild(None, 'foaf:member', None)
+    #     for url in sorted(rawdog.feeds.keys()):
+    #         member = group.newChild(None, 'foaf:member', None)
 
-            agent = member.newChild(None, 'foaf:Agent', None)
-            agent.newChild(None, 'foaf:name', escape(self.feed_name(rawdog.feeds[url], config)))
-            weblog = agent.newChild(None, 'foaf:weblog', None)
-            document = weblog.newChild(None, 'foaf:Document', None)
-            if rawdog.feeds[url].feed_info.get('link', ''):
-                document.setProp('rdf:about', rawdog.feeds[url].feed_info['link'])
-            seealso = document.newChild(None, 'rdfs:seeAlso', None)
-            channel = seealso.newChild(None, 'rss:channel', None)
-            channel.setProp('rdf:about', url)
+    #         agent = member.newChild(None, 'foaf:Agent', None)
+    #         agent.newChild(None, 'foaf:name', escape(self.feed_name(rawdog.feeds[url], config)))
+    #         weblog = agent.newChild(None, 'foaf:weblog', None)
+    #         document = weblog.newChild(None, 'foaf:Document', None)
+    #         if rawdog.feeds[url].feed_info.get('link', ''):
+    #             document.setProp('rdf:about', rawdog.feeds[url].feed_info['link'])
+    #         seealso = document.newChild(None, 'rdfs:seeAlso', None)
+    #         channel = seealso.newChild(None, 'rss:channel', None)
+    #         channel.setProp('rdf:about', url)
 
-        doc.saveFormatFile(self.options["outputfoaf"], 1)
-        doc.freeDoc()
+    #     doc.saveFormatFile(self.options["outputfoaf"], 1)
+    #     doc.freeDoc()
 
     def write_opml(self, rawdog, config):
-        doc = libxml2.newDoc("1.0")
+        return True # Added
+    #     doc = lxml.newDoc("1.0")
 
-        xml = doc.newChild(None, 'opml', None)
-        xml.setProp('version', "2.0")
+    #     xml = doc.newChild(None, 'opml', None)
+    #     xml.setProp('version', "2.0")
 
-        head = xml.newChild(None, 'head', None)
-        head.newChild(None, 'title', escape(self.options["xmltitle"]))
-        now = rfc822_date(gmtime())
-        head.newChild(None, 'dateCreated', escape(now))
-        head.newChild(None, 'dateModified', escape(now))
-        head.newChild(None, 'ownerName', escape(self.options["xmlownername"]))
-        head.newChild(None, 'ownerEmail', escape(self.options["xmlowneremail"]))
+    #     head = xml.newChild(None, 'head', None)
+    #     head.newChild(None, 'title', escape(self.options["xmltitle"]))
+    #     now = rfc822_date(gmtime())
+    #     head.newChild(None, 'dateCreated', escape(now))
+    #     head.newChild(None, 'dateModified', escape(now))
+    #     head.newChild(None, 'ownerName', escape(self.options["xmlownername"]))
+    #     head.newChild(None, 'ownerEmail', escape(self.options["xmlowneremail"]))
 
-        body = xml.newChild(None, 'body', None)
-        for url in sorted(rawdog.feeds.keys()):
-            outline = body.newChild(None, 'outline', None)
-            outline.setProp('text', self.feed_name(rawdog.feeds[url], config))
-            outline.setProp('xmlUrl', url)
+    #     body = xml.newChild(None, 'body', None)
+    #     for url in sorted(rawdog.feeds.keys()):
+    #         outline = body.newChild(None, 'outline', None)
+    #         outline.setProp('text', self.feed_name(rawdog.feeds[url], config))
+    #         outline.setProp('xmlUrl', url)
 
-        doc.saveFormatFile(self.options["outputopml"], 1)
-        doc.freeDoc()
+    #     doc.saveFormatFile(self.options["outputopml"], 1)
+    #     doc.freeDoc()
 
     def output_write(self, rawdog, config, articles):
         self.write_rss(rawdog, config, articles)

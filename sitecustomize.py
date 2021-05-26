@@ -1,3 +1,4 @@
 import sys
-reload(sys)
+import importlib
+importlib.reload(sys)
 sys.setdefaultencoding('utf8')

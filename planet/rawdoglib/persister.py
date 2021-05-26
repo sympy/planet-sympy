@@ -16,7 +16,7 @@
 # Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 # MA 02110-1301, USA, or see http://www.gnu.org/.
 
-import cPickle as pickle
+import pickle as pickle
 import errno
 import fcntl
 import os
@@ -56,7 +56,7 @@ class Persisted:
 			try:
 				os.rename(self.filename + ext,
 				          new_filename + ext)
-			except OSError, e:
+			except OSError as e:
 				# If the file doesn't exist (yet),
 				# that's OK.
 				if e.errno != errno.ENOENT:
@@ -92,8 +92,8 @@ class Persisted:
 		except KeyboardInterrupt:
 			sys.exit(1)
 		except:
-			print "An error occurred while reading state from " + os.path.abspath(self.filename) + "."
-			print "This usually means the file is corrupt, and removing it will fix the problem."
+			print("An error occurred while reading state from " + os.path.abspath(self.filename) + ".")
+			print("This usually means the file is corrupt, and removing it will fix the problem.")
 			sys.exit(1)
 
 		self.refcount = 1
@@ -109,7 +109,7 @@ class Persisted:
 			if no_block:
 				mode |= fcntl.LOCK_NB
 			fcntl.lockf(self.lock_file.fileno(), mode)
-		except IOError, e:
+		except IOError as e:
 			if no_block and e.errno in (errno.EACCES, errno.EAGAIN):
 				return False
 			raise e
@@ -146,7 +146,7 @@ class Persisted:
 		if self.object.is_modified():
 			self.persister.log("Saving state file: ", self.filename)
 			newname = "%s.new-%d" % (self.filename, os.getpid())
-			newfile = open(newname, "w")
+			newfile = open(newname, "wb")
 			pickle.dump(self.object, newfile, pickle.HIGHEST_PROTOCOL)
 			newfile.close()
 			os.rename(newname, self.filename)
