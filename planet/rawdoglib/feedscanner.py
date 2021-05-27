@@ -1,21 +1,27 @@
 """Scan a URL's contents to find related feeds
+
 This is a compatible replacement for Aaron Swartz's feedfinder module,
 using feedparser to check whether the URLs it returns are feeds.
+
 It finds links to feeds within the following elements:
 - <link rel="alternate" ...> (standard feed discovery)
 - <a ...>, if the href contains words that suggest it might be a feed
+
 It orders feeds using a quality heuristic: the first result is the most
 likely to be a feed for the given URL.
+
 Required: Python 2.4 or later, feedparser
 """
 
 __license__ = """
 Copyright (c) 2008 Decklin Foster <decklin@red-bean.com>
 Copyright (c) 2013, 2015 Adam Sampson <ats@offog.org>
+
 Permission to use, copy, modify, and/or distribute this software for
 any purpose with or without fee is hereby granted, provided that
 the above copyright notice and this permission notice appear in all
 copies.
+
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
 WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
