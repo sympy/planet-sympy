@@ -4,6 +4,7 @@ services:
   - docker
 
 before_install:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   - docker build -t test/planet-sympy .
   - docker ps -a
 
