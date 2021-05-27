@@ -1,4 +1,4 @@
-rawdog: RSS aggregator without delusions of grandeur.
+# rawdog: RSS aggregator without delusions of grandeur.
 # Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015 Adam Sampson <ats@offog.org>
 #
 # rawdog is free software; you can redistribute and/or modify it
