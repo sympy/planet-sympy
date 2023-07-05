@@ -570,7 +570,7 @@ feed 15m http://abhinav28071999.github.io/feed.xml
         define_facewidth 80
         define_faceheight 80
 
-feed 15m https:///mijo2.github.io/feed.xml
+feed 15m https://mijo2.github.io/feed.xml
         define_name Milan Jolly (mijo2)
         define_face hackergotchi/mijo2.jpg
         define_facewidth 80
