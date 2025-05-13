@@ -1,37 +1,49 @@
-# Sources for planet.sympy.org
+# Planet SymPy
 
-## Adding a new blog
+This repository contains the code for the [Planet SymPy](https://planet.sympy.org/) website, which aggregates blog posts from SymPy contributors.
 
-Add a new blog a the end of `planet/planetsympy/config`. Send a PR against this
-repository. Travis tests must pass: Travis will build a docker image and pull
-all the blogs. This will ensure that the syntax in the `config` file is
-correct.
+## How to add your blog
 
-# Development
+If you are a SymPy contributor, you can have your blog on Planet SymPy. Blog content can be SymPy/SymEngine/SciPy/Python themed, English language and not liable to offend. If you have a general blog, you may want to set up a tag and subscribe the feed for that tag only to Planet SymPy.
 
-To build the site, run
+To have your blog added:
+- File an issue on this GitHub repository listing your name, GitHub handle (if you have one), RSS or Atom feed and what you do in SymPy.
+- Attach a photo of your face for hackergotchi.
 
-    ./build.sh
+Alternatively, you can submit a pull request:
+- Add your hackergotchi in `planet/website/hackergotchi/`. A hackergotchi should be a photo of your face smaller than 80x80 pixels with a transparent background.
+- At the end of the `planet/planetsympy/config` file add your details:
+```
+feed 15m http://example.com/feeds/feed.sympy.xml
+        define_name Your Name (yourgithubhandle)
+        define_face hackergotchi/yourgithubhandle.jpg
+        define_facewidth 80
+        define_faceheight 80
+```
 
-This requires Python 2 and some libraries.
+## Development
 
-# Deployment
+To build the site locally, run:
 
-This repository is automatically deployed as follows.
+```
+./build.sh
+```
 
-First, a docker image from the latest master is automatically built by
-GitLab-CI and made available at:
-https://gitlab.com/sympy/planet-sympy/container_registry. This is achieved by
-having a GitLab [mirror](https://gitlab.com/sympy/planet-sympy) automatically
-running a pipeline from the master branch updating the docker image whenever it
-changes.
+This requires Python 3 and the following libraries: `feedparser` and `requests`.
 
-Second, we have a repository at https://gitlab.com/sympy/planet-sympy-updater,
-which has a pipeline that takes the latest docker image and runs it. This
-pipeline is triggered via a cron script every 20 minutes. Here is a direct link
-for the latest builds, so that you can check the status of the latest update of
-the `planet.sympy.org` website:
-https://gitlab.com/sympy/planet-sympy-updater/pipelines.
+## Deployment
 
-Third, when the docker image is run, it will update the planet and push the new
-files into the https://github.com/planet-sympy/planet.sympy.org repository.
+The site is automatically updated every 6 hours using GitHub Actions. The workflow:
+
+1. Builds a Docker image containing the necessary code and dependencies
+2. Runs the site generator to fetch feeds and generate the HTML output
+3. Pushes the generated files to the [planet.sympy.org](https://github.com/planet-sympy/planet.sympy.org) repository
+
+You can check the status of the latest update by looking at the Actions tab in this repository.
+
+## Technical Details
+
+The site uses a custom Python-based RSS aggregator that:
+- Fetches and parses RSS/Atom feeds
+- Generates HTML output using templates
+- Provides RSS, FOAF, and OPML formats

@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import subprocess
@@ -6,17 +6,15 @@ import time
 
 def job(silence_error=False):
     print("Launching job (./update.sh)...")
-    result = subprocess.Popen("./update.sh")
-    text = result.communicate()[0]
+    result = subprocess.run(["./update.sh"], capture_output=True, text=True)
     returncode = result.returncode
-    if not silence_error:
-        if returncode != 0:
-            raise Exception("Return code is non zero.")
+    if not silence_error and returncode != 0:
+        raise Exception(f"Return code is non zero: {returncode}")
     print("Job finished.")
 
 print("Docker environment variables:")
 if os.environ.get("SSH_PRIVATE_KEY"):
-    deploy_token_display = "<non-emtpy ssh private key>"
+    deploy_token_display = "<non-empty ssh private key>"
 else:
     deploy_token_display = "<empty>"
 print("SSH_PRIVATE_KEY =", deploy_token_display)

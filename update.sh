@@ -1,17 +1,14 @@
-#! /bin/bash
+#!/bin/bash
 
 set -e
 set -x
 
-# Switch locale to utf8, otherwise rawdog fails to load unicode names
-export LC_ALL="C.UTF-8"
-export LC_CTYPE="C.UTF-8"
-
+# LC_ALL is set in the Dockerfile now
 
 ./build.sh
 
 if [[ "${TESTING}" == "true" ]]; then
-    # Use testing setup for Travis
+    # Use testing setup for CI
     REPO_SUFFIX="-test"
 else
     # Production setup
@@ -21,11 +18,11 @@ fi
 git clone https://github.com/planet-sympy/planet.sympy.org${REPO_SUFFIX}
 cd planet.sympy.org${REPO_SUFFIX}
 
-git config user.name "Docker"
-git config user.email "noreply@docker.org"
+git config user.name "Planet SymPy Bot"
+git config user.email "noreply@sympy.org"
 COMMIT_MESSAGE="Publishing site on $(date "+%Y-%m-%d %H:%M:%S")"
 
-git checkout -t origin/gh-pages
+git checkout -t origin/gh-pages || git checkout gh-pages
 rm -rf ./*
 cp -r ../build/website/* .
 if [[ "${TESTING}" != "true" ]]; then
@@ -35,33 +32,11 @@ touch .nojekyll
 git add -A .
 git commit -m "${COMMIT_MESSAGE}"
 
-
 echo "Deploying:"
 
-mkdir ~/.ssh
-chmod 700 ~/.ssh
-ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-eval "$(ssh-agent -s)"
-
-set +x
 if [[ "${SSH_PRIVATE_KEY}" == "" ]]; then
     echo "Not deploying because SSH_PRIVATE_KEY is empty."
     exit 0
 fi
-# Generate the private/public key pair using:
-#
-#     ssh-keygen -f deploy_key -N ""
-#
-# then set the $SSH_PRIVATE_KEY environment variable in the CI (Travis-CI,
-# GitLab-CI, ...) to the base64 encoded private key:
-#
-#     cat deploy_key | base64 -w0
-#
-# and add the public key `deploy_key.pub` into the target git repository (with
-# write permissions).
 
-ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 --decode)
-set -x
-
-git push git@github.com:planet-sympy/planet.sympy.org${REPO_SUFFIX} gh-pages
+git push origin gh-pages

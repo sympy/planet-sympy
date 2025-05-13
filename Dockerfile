@@ -1,16 +1,20 @@
-FROM ubuntu:14.04
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LC_ALL=C.UTF-8
+ENV LC_CTYPE=C.UTF-8
 
 RUN apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
-        python-pip \
-        python-libxml2 \
+    && apt-get install -y --no-install-recommends \
+        python3-pip \
+        python3-setuptools \
+        python3-wheel \
         openssh-client \
         git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-    && pip install --upgrade setuptools pip \
-    && hash -r \
-    && pip install --no-cache-dir feedparser schedule
+    && pip3 install --upgrade setuptools pip \
+    && pip3 install --no-cache-dir feedparser schedule requests
 
 RUN groupadd -r swuser -g 433 && \
     mkdir /home/swuser && \
@@ -19,16 +23,16 @@ RUN groupadd -r swuser -g 433 && \
     chown -R swuser:swuser /home/swuser
 WORKDIR /home/swuser
 
-ADD sitecustomize.py /usr/lib/python2.7/sitecustomize.py
 ADD planet planet
 ADD update.sh update.sh
 ADD build.sh build.sh
 ADD scheduler.py scheduler.py
-#ADD .git/refs/heads/master git_revision
-RUN chown -R swuser:swuser planet update.sh scheduler.py
+ADD planet.py planet.py
+RUN chmod +x planet.py update.sh build.sh scheduler.py && \
+    chown -R swuser:swuser planet update.sh scheduler.py planet.py
 
 USER swuser
 
-RUN mkdir testrun/
+RUN mkdir -p testrun/
 
-CMD ./scheduler.py
+CMD ["python3", "./scheduler.py"]
