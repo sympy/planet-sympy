@@ -203,11 +203,12 @@ itemtemplate itemplate
 # (You will probably want to make this an absolute path, else rawdog will write
 # to a file in your ~/.rawdog directory.)
 #outputfile output.html
-outputfile ../website/index.html
+outputfile index.html
 
-outputxml ../website/rss10.xml
-outputfoaf ../website/foafroll.xml
-outputopml ../website/opml.xml
+outputxml rss10.xml
+outputxml2 rss20.xml
+outputfoaf foafroll.xml
+outputopml opml.xml
 xmlmaxarticles 30
 
 # Whether to use a <meta http-equiv="Refresh" ...> tag in the generated

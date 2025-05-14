@@ -24,7 +24,7 @@ COMMIT_MESSAGE="Publishing site on $(date "+%Y-%m-%d %H:%M:%S")"
 
 git checkout -t origin/gh-pages || git checkout gh-pages
 rm -rf ./*
-cp -r ../build/website/* .
+cp -r ../build/* .
 if [[ "${TESTING}" != "true" ]]; then
     echo "planet.sympy.org" > CNAME
 fi

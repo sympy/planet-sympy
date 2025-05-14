@@ -90,14 +90,15 @@ class PlanetAggregator:
             "daysections": True,
             "datetimeformat": "%H:%M, %A, %d %B",
             "dayformat": "%B %d, %Y",
-            "outputfile": "../website/index.html",
+            "outputfile": "index.html",
             "showfeeds": True,
             "sortbyfeeddate": True,
             "template": "planet_template",
-            "itemtemplate": "itemplate",
-            "outputxml": "../website/rss10.xml",
-            "outputfoaf": "../website/foafroll.xml",
-            "outputopml": "../website/opml.xml",
+            "itemtemplate": "itemtemplate",
+            "outputxml": "rss10.xml",
+            "outputxml2": "rss20.xml",
+            "outputfoaf": "foafroll.xml",
+            "outputopml": "opml.xml",
             "xmlmaxarticles": 30,
             "numthreads": 3
         }
@@ -291,20 +292,19 @@ class PlanetAggregator:
                 f'<meta http-equiv="refresh" content="{refresh_time * 60}" />')
         else:
             output = output.replace('__refresh__', '')
+            
+        # Add RSS links
+        output = output.replace('__rss10__', 'rss10.xml')
+        output = output.replace('__rss20__', 'rss20.xml')
         
         # Write the output to file
-        output_file = self.config.get('outputfile', '../website/index.html')
-        output_dirname = os.path.dirname(self.config_dir)
+        output_file = self.config.get('outputfile', 'index.html')
+        output_dir = self.config.get('output_dir', 'build')
         
-        # For relative paths
-        if not os.path.isabs(output_file) and output_file.startswith("../"):
-            # Remove the leading "../"
-            relative_path = output_file[3:]  
-            output_path = os.path.join(output_dirname, relative_path)
-        else:
-            output_path = output_file
+        # Create full output path
+        output_path = os.path.join(output_dir, output_file)
         
-        output_dir = os.path.dirname(output_path)
+        # Create output directory if it doesn't exist
         os.makedirs(output_dir, exist_ok=True)
         
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -402,9 +402,13 @@ class PlanetAggregator:
     
     def _write_xml_output(self):
         """Generate XML output files (RSS, FOAF, OPML)"""
-        # Generate RSS
+        # Generate RSS 1.0
         if 'outputxml' in self.config:
-            self._write_rss()
+            self._write_rss(self.config.get('outputxml'))
+        
+        # Generate RSS 2.0
+        if 'outputxml2' in self.config:
+            self._write_rss2(self.config.get('outputxml2'))
         
         # Generate FOAF
         if 'outputfoaf' in self.config:
@@ -414,9 +418,8 @@ class PlanetAggregator:
         if 'outputopml' in self.config:
             self._write_opml()
     
-    def _write_rss(self):
-        """Generate RSS output"""
-        output_file = self.config.get('outputxml')
+    def _write_rss(self, output_file):
+        """Generate RSS 1.0 output"""
         max_articles = self.config.get('xmlmaxarticles', 30)
         
         articles_to_show = self.articles[:max_articles] if max_articles > 0 else self.articles
@@ -449,17 +452,9 @@ class PlanetAggregator:
         rss.append('</rss>')
         
         # Determine output path
-        output_dirname = os.path.dirname(self.config_dir)
-        
-        # For relative paths
-        if not os.path.isabs(output_file) and output_file.startswith("../"):
-            # Remove the leading "../"
-            relative_path = output_file[3:]  
-            output_path = os.path.join(output_dirname, relative_path)
-        else:
-            output_path = output_file
+        output_dir = self.config.get('output_dir', 'build')
+        output_path = os.path.join(output_dir, output_file)
             
-        output_dir = os.path.dirname(output_path)
         os.makedirs(output_dir, exist_ok=True)
         
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -467,9 +462,53 @@ class PlanetAggregator:
         
         logger.info(f"Wrote RSS output to {output_path}")
     
+    def _write_rss2(self, output_file):
+        """Generate RSS 2.0 output"""
+        max_articles = self.config.get('xmlmaxarticles', 30)
+        
+        articles_to_show = self.articles[:max_articles] if max_articles > 0 else self.articles
+        
+        rss = [
+            '<?xml version="1.0" encoding="utf-8"?>',
+            '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
+            '  <channel>',
+            '    <title>Planet SymPy</title>',
+            '    <link>https://planet.sympy.org/</link>',
+            '    <description>Planet SymPy - https://planet.sympy.org/</description>',
+            '    <atom:link href="https://planet.sympy.org/rss20.xml" rel="self" type="application/rss+xml" />',
+            '    <language>en</language>',
+            f'    <pubDate>{datetime.datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")}</pubDate>',
+        ]
+        
+        for article in articles_to_show:
+            pub_date = datetime.datetime.fromtimestamp(article.date).strftime("%a, %d %b %Y %H:%M:%S +0000")
+            
+            rss.append('    <item>')
+            rss.append(f'      <title>{html.escape(article.title)}</title>')
+            rss.append(f'      <link>{html.escape(article.link)}</link>')
+            rss.append(f'      <guid isPermaLink="false">{html.escape(article.id)}</guid>')
+            rss.append(f'      <pubDate>{pub_date}</pubDate>')
+            rss.append(f'      <description>{html.escape(article.description)}</description>')
+            rss.append(f'      <source url="{html.escape(article.feed.url)}">{html.escape(article.feed.title)}</source>')
+            rss.append('    </item>')
+        
+        rss.append('  </channel>')
+        rss.append('</rss>')
+        
+        # Determine output path
+        output_dir = self.config.get('output_dir', 'build')
+        output_path = os.path.join(output_dir, output_file)
+            
+        os.makedirs(output_dir, exist_ok=True)
+        
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write('\n'.join(rss))
+        
+        logger.info(f"Wrote RSS 2.0 output to {output_path}")
+    
     def _write_foaf(self):
         """Generate FOAF output"""
-        output_file = self.config.get('outputfoaf')
+        output_file = self.config.get('outputfoaf', 'foafroll.xml')
         
         foaf = [
             '<?xml version="1.0" encoding="utf-8"?>',
@@ -498,17 +537,9 @@ class PlanetAggregator:
         foaf.append('</rdf:RDF>')
         
         # Determine output path
-        output_dirname = os.path.dirname(self.config_dir)
-        
-        # For relative paths
-        if not os.path.isabs(output_file) and output_file.startswith("../"):
-            # Remove the leading "../"
-            relative_path = output_file[3:]  
-            output_path = os.path.join(output_dirname, relative_path)
-        else:
-            output_path = output_file
+        output_dir = self.config.get('output_dir', 'build')
+        output_path = os.path.join(output_dir, output_file)
             
-        output_dir = os.path.dirname(output_path)
         os.makedirs(output_dir, exist_ok=True)
         
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -518,7 +549,7 @@ class PlanetAggregator:
     
     def _write_opml(self):
         """Generate OPML output"""
-        output_file = self.config.get('outputopml')
+        output_file = self.config.get('outputopml', 'opml.xml')
         
         opml = [
             '<?xml version="1.0" encoding="utf-8"?>',
@@ -540,17 +571,9 @@ class PlanetAggregator:
         opml.append('</opml>')
         
         # Determine output path
-        output_dirname = os.path.dirname(self.config_dir)
-        
-        # For relative paths
-        if not os.path.isabs(output_file) and output_file.startswith("../"):
-            # Remove the leading "../"
-            relative_path = output_file[3:]  
-            output_path = os.path.join(output_dirname, relative_path)
-        else:
-            output_path = output_file
+        output_dir = self.config.get('output_dir', 'build')
+        output_path = os.path.join(output_dir, output_file)
             
-        output_dir = os.path.dirname(output_path)
         os.makedirs(output_dir, exist_ok=True)
         
         with open(output_path, 'w', encoding='utf-8') as f:
@@ -560,13 +583,14 @@ class PlanetAggregator:
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: planet.py -d CONFIG_DIR [--update] [--write]")
+        print("Usage: planet.py -d CONFIG_DIR [--update] [--write] [--output-dir OUTPUT_DIR]")
         sys.exit(1)
     
     # Parse command line arguments
     config_dir = None
     update = False
     write = False
+    output_dir = "build"
     
     i = 1
     while i < len(sys.argv):
@@ -579,6 +603,9 @@ def main():
         elif sys.argv[i] == "--write":
             write = True
             i += 1
+        elif sys.argv[i] == "--output-dir" and i + 1 < len(sys.argv):
+            output_dir = sys.argv[i + 1]
+            i += 2
         else:
             i += 1
     
@@ -589,6 +616,9 @@ def main():
     # Initialize and run the aggregator
     try:
         aggregator = PlanetAggregator(config_dir)
+        
+        # Set output directory
+        aggregator.config['output_dir'] = output_dir
         
         if update:
             aggregator.update()
