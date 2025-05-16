@@ -1,2 +1,7 @@
-
-    <p class="twitter"><a href="__url__">__title_no_link__</a> <span style="font-size: smaller">(__date__ UTC)</span></p>
+<div class="box">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <p class="twitter"><a href="__url__">__title_no_link__</a> <span style="font-size: smaller">(__date__ UTC)</span></p>
+        </div>
+    </div>
+</div>

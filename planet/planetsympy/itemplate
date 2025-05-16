@@ -1,16 +1,46 @@
-<div class="daygroup">
-<div class="channelgroup">
-
-<div class="entry">
-    __if_face__ <img class="face" src="__face__" width="__facewidth__" height="__faceheight__" alt="" /> __endif__
-    <h3><a href="__url__">__title_no_link__</a></h3>
-    <div class="info">
-        <a href="__feed_url__">__feed_title_no_link__</a>, <span class="date"><a href="__url__">__date__</a></span>
+<div class="day">
+<h2 class="dayform">__date__</h2>
+<div class="channelgroup ">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+            <div class="box" class="item feed-__feed_hash__ feed-" id="item-__hash__">
+                <div class="row" style="border-bottom:1px solid #BDC3C7; margin-bottom:1%;">
+                    <table class="table borderless table-condensed">
+                        <tr>
+                            <td rowspan="2" class="consizeit" style="vertical-align:middle;">
+                                <div style="margin-right:5px;">
+                                     __if_face__ <img src="__face__" width="__facewidth__" height="__faceheight__"/> __endif__
+                                </div>
+                            </td>
+                            <td style="vertical-align:bottom;">
+                                <div class="row" style="margin-top:15px;">
+                                    <div class="col-md-8">
+                                        <a href="__feed_url__">__feed_title_no_link__ </a>
+                                    </div>
+                                    <div class="col-md-4 dtdate">
+                                        <a href="__url__">__date__</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align:bottom;">
+                                <div class="row">
+                                    <div class="col-md-12 col-xs-12">
+                                        <h4><a class="boxh2" href="__url__">__title_no_link__</a></h4>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 descript">
+                        <div>__description__</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="content">
-        __description__
-    </div>
-</div>
-
 </div>
 </div>

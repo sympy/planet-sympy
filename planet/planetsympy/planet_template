@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 
 <head>
@@ -6,49 +6,212 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
-    <title>Planet SymPy</title>
-    
-    <link rel="shortcut icon" type="image/png" href="images/sympy_favicon.png"/>
-    <link rel="stylesheet" href="bootstrap.css" type="text/css" />
-    <link rel="stylesheet" href="main.css" type="text/css" />
-    <link rel="stylesheet" href="planet.css" type="text/css" />
-    
-    <link rel="alternate" type="application/rss+xml" title="Planet SymPy" href="rss10.xml" />
-    <link rel="alternate" href="atom.xml" title="" type="application/atom+xml">
-    
-    <!-- Meta tags for social sharing -->
+
     <meta property="og:url" content="http://planet.sympy.org/" />
     <meta property="og:type" content="blog" />
     <meta property="og:title" content="Planet Sympy" />
     <meta property="og:description" content="Sympy's own blog aggregator!" />
     <meta property="og:image" content="./images/logo.png" />
+
+    <link rel="stylesheet" href="bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="main.css" type="text/css" />
+    <title>Planet SymPy</title>
+    <link rel="alternate" type="application/rss+xml" title="Planet SymPy" href="rss10.xml" />
+    <link rel="alternate" href="atom.xml" title="" type="application/atom+xml">
+
+    <script language="javascript">
+        //In Mozilla, WebKit(?) Coming in IE9, in HTML5
+        if (document.addEventListener) {
+            document.addEventListener("DOMContentLoaded", applyConfig, false);
+        }
+
+        function toggle() {
+            var ele = document.getElementById("feeddiv");
+            if (ele.style.display == "block") {
+                ele.style.display = "none";
+            } else {
+                ele.style.display = "block";
+            }
+        }
+
+        function toggleaddme() {
+            var ele = document.getElementById("addme");
+            if (ele.style.display == "block") {
+                ele.style.display = "none";
+            } else {
+                ele.style.display = "block";
+            }
+        }
+
+    </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
 </head>
 
-<body>
-    <h1>Planet SymPy</h1>
+<body onDOMContentLoaded="javascript:applyConfig();" onLoad="javascript:applyConfig();">
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="./index.html"><span class="icon-sympyLogo"></span> Planet SymPy</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#peeps" data-toggle="modal" data-target="#peeps">People Aggregated</a>
+                    </li>
+                    <li><a href="#addmore" data-toggle="modal" data-target="#addmore">Add your Blog</a>
+                    </li>
+                    <li><a href="#socfeeds" data-toggle="modal" data-target="#socfeeds">Twitter Feed</a>
+                    </li>
+                    <li><a href="#hashtagsympy" data-toggle="modal" data-target="#hashtagsympy">#sympy</a>
+                    </li>
+                    <li><a href="#gsoc" data-toggle="modal" data-target="#gsoc">GSoC students</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="https://twitter.com/PlanetSymPy" id="donateLink">Follow @PlanetSymPy</a>
+                    </li>
+                    <li>
+                        <a href="http://www.sympy.org/en/donate.html" id="donateLink">Donate</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
 
-    <div class="sidebar">
-        <h2>Planet SymPy</h2>
-        <p>
-            <a href="https://github.com/sympy/planet-sympy">Add your blog</a>
-        </p>
-        <p>
-            <a href="http://planet.sympy.org/rss10.xml"><img src="images/feed-icon-10x10.png" alt="RSS Feed" /> RSS Feed</a>
-        </p>
-        <p>
-            <a href="http://www.sympy.org">SymPy</a>
-        </p>
-    </div>
-
-    <div class="content">
+    <div class="container">
         __items__
     </div>
 
-    <div class="footer">
-        <p>
-            Planet SymPy is made from the blogs of SymPy's contributors. The opinions it contains are those of the contributor. Feed readers can read Planet SymPy with <a href="rss10.xml">RSS</a>, <a href="foafroll.xml">FOAF</a> or <a href="opml.xml">OPML</a>.
-        </p>
+    <!-- Modal for People -->
+    <div class="modal fade" id="peeps" tabindex="-1" role="dialog" aria-labelledby="peepsLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="peepsLabel">People Aggregated in Planet SymPy</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Planet SymPy is made from the blogs of the following contributors. The content of the individual blogs is owned by the author. In no way does their presence here imply an endorsement of views expressed in the blogs by the maintainers of this aggregator or anyone else.
+                    </p>
+                    <p>
+                        <ul class="bluebor">
+                            __feeds__
+                        </ul>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- Modal for Add Blog -->
+    <div class="modal fade" id="addmore" tabindex="-1" role="dialog" aria-labelledby="addmoreLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="addmoreLabel">How to Add Your Blog to Planet SymPy</h4>
+                </div>
+                <div class="modal-body">
+                    <p>If you are a SymPy contributor you can have your blog on Planet SymPy. Blog content can be SymPy/SymEngine/SciPy/Python themed, English language and not liable to offend. If you have a general blog you may want to set up a tag and subscribe the feed for that tag only to Planet SymPy.</p>
+                    <p>To have your blog added, file an issue on the <a href="https://github.com/sympy/planet-sympy">planet-sympy GitHub repository</a> listing your name, GitHub handle (if you have one), RSS or Atom feed, and what you do in SymPy. Attach a photo of your face for hackergotchi.</p>
+                    <p>Alternatively, Planet SymPy is kept in GitHub. If you have an account you can add or edit your own feed:</p>
+                    <pre>git clone git@github.com:sympy/planet-sympy.git</pre>
+                    <p>Put your hackergotchi in planet/website/hackergotchi/. A hackergotchi should be a photo of your face smaller than 80x80 pixels with a transparent background. git add the file.</p>
+                    <p>At the end of the planetsympy/config file add your details:</p>
+                    <pre>feed 15m http://sumith1896.github.io/feeds/feed.sympy.xml
+    define_name Sumith (sumith1896)
+    define_face hackergotchi/sumith1896.png
+    define_facewidth 80
+    define_faceheight 80</pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Twitter Feed -->
+    <div class="modal fade" id="socfeeds" tabindex="-1" role="dialog" aria-labelledby="socfeedsLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="socfeedsLabel">Twitter Feed</h4>
+                </div>
+                <div class="modal-body">
+                    <a class="twitter-timeline" href="https://twitter.com/PlanetSymPy">Tweets by @PlanetSymPy</a>
+                    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for #sympy -->
+    <div class="modal fade" id="hashtagsympy" tabindex="-1" role="dialog" aria-labelledby="hashtagsympyLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="hashtagsympyLabel">#sympy Twitter Feed</h4>
+                </div>
+                <div class="modal-body">
+                    <a class="twitter-timeline" href="https://twitter.com/hashtag/sympy" data-widget-id="748079883248775169">#sympy Tweets</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for GSoC students -->
+    <div class="modal fade" id="gsoc" tabindex="-1" role="dialog" aria-labelledby="gsocLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gsocLabel">GSoC Students</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Every year, SymPy participates in the <a href="https://summerofcode.withgoogle.com/">Google Summer of Code</a> program, where Google sponsors students to work on open source projects. Many GSoC students start blogging about their work, and their blogs are aggregated here.
+                    </p>
+                    <p>
+                        For more information about GSoC with SymPy, see the <a href="https://github.com/sympy/sympy/wiki/GSoC-2022-Ideas">SymPy GSoC Ideas Page</a>.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted">
+                Planet SymPy is made from the blogs of SymPy's contributors. The opinions it contains are those of the contributor. Feed readers can read Planet SymPy with <a href="rss10.xml">RSS</a>, <a href="foafroll.xml">FOAF</a> or <a href="opml.xml">OPML</a>.
+            </p>
+        </div>
+    </footer>
 </body>
 
 </html>
