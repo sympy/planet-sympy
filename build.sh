@@ -34,10 +34,15 @@ if [ -d "planet/website/fonts" ]; then
   echo "Copied fonts from website directory"
 fi
 
-if [ -d "planet/website/css" ]; then
-  cp planet/website/css/bootstrap.css build/ 2>/dev/null || true
-  cp planet/website/css/main.css build/ 2>/dev/null || true
-  echo "Copied CSS from website directory"
+# Copy CSS files directly from website directory
+if [ -f "planet/website/bootstrap.css" ]; then
+  cp planet/website/bootstrap.css build/ 2>/dev/null || true
+  echo "Copied bootstrap.css from website directory"
+fi
+
+if [ -f "planet/website/main.css" ]; then
+  cp planet/website/main.css build/ 2>/dev/null || true
+  echo "Copied main.css from website directory"
 fi
 
 # Fallback to copying from gh-pages branch if needed images aren't available
