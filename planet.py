@@ -113,6 +113,7 @@ class PlanetAggregator:
             feed_options = {}
             
             for line in content.splitlines():
+                orig_line = line
                 line = line.strip()
                 if not line or line.startswith('#'):
                     continue
@@ -135,10 +136,18 @@ class PlanetAggregator:
                             key, value = arg.split('=', 1)
                             feed_options[key] = value
                 
-                elif in_feed and line.startswith(' ') and '=' in line:
+                elif in_feed and orig_line.startswith(' ') and line.strip():
                     # Feed option on a new line
                     line = line.strip()
-                    key, value = line.split('=', 1)
+                    if '=' in line:
+                        key, value = line.split('=', 1)
+                    else:
+                        # Handle space-separated format like "define_name Timo Stienstra"
+                        parts = line.split(' ', 1)
+                        if len(parts) == 2:
+                            key, value = parts
+                        else:
+                            continue
                     feed_options[key] = value
                 
                 elif ' ' in line and not in_feed:
@@ -355,13 +364,15 @@ class PlanetAggregator:
                 output = output.replace(f'__{var_name}__', str(value))
         
         # Process conditionals like __if_description__
+        face_value = feed.get_face()
         output = self._process_conditionals(output, {
             'title': article.title,
             'url': article.link,
             'guid': article.id,
             'description': article.description,
             'feed_title': feed.title,
-            'feed_url': feed.url
+            'feed_url': feed.url,
+            'face': face_value
         })
         
         return output
