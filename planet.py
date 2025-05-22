@@ -5,13 +5,15 @@ import sys
 import time
 import datetime
 import re
-import configparser
 import hashlib
 import logging
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor
 import html
 import json
+import subprocess
+import shutil
+import argparse
 
 import feedparser
 
@@ -80,7 +82,7 @@ class PlanetAggregator:
         self.read_config()
         
     def read_config(self):
-        """Read the rawdog-compatible config file"""
+        """Read the planet config file"""
         logger.info(f"Reading config from {self.config_file}")
         
         # Default config values
@@ -94,7 +96,7 @@ class PlanetAggregator:
             "showfeeds": True,
             "sortbyfeeddate": True,
             "template": "planet_template",
-            "itemtemplate": "itemtemplate",
+            "itemtemplate": "itemplate",
             "outputxml": "rss10.xml",
             "outputxml2": "rss20.xml",
             "outputfoaf": "foafroll.xml",
@@ -248,7 +250,7 @@ class PlanetAggregator:
         else:
             self.articles.sort(key=lambda x: x.added, reverse=True)
     
-    def write(self):
+    def write(self, output_dir="build"):
         """Generate and write the output HTML file"""
         logger.info("Generating HTML output")
         
@@ -288,7 +290,7 @@ class PlanetAggregator:
         
         # Fill in the main template
         output = self.templates['template']
-        output = output.replace('__version__', 'Planet SymPy Modern 1.0')
+        output = output.replace('__version__', 'Planet SymPy 2.0')
         output = output.replace('__items__', '\n'.join(items_html))
         output = output.replace('__num_items__', str(len(articles_to_show)))
         output = output.replace('__feeds__', '<ul>\n' + '\n'.join(feeds_html) + '\n</ul>' if feeds_html else '')
@@ -306,23 +308,20 @@ class PlanetAggregator:
         output = output.replace('__rss10__', 'rss10.xml')
         output = output.replace('__rss20__', 'rss20.xml')
         
-        # Write the output to file
-        output_file = self.config.get('outputfile', 'index.html')
-        output_dir = self.config.get('output_dir', 'build')
-        
-        # Create full output path
-        output_path = os.path.join(output_dir, output_file)
-        
         # Create output directory if it doesn't exist
         os.makedirs(output_dir, exist_ok=True)
+        
+        # Write the output to file
+        output_file = self.config.get('outputfile', 'index.html')
+        output_path = os.path.join(output_dir, output_file)
         
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(output)
         
         logger.info(f"Wrote HTML output to {output_path}")
         
-        # Generate RSS, FOAF and OPML if needed
-        self._write_xml_output()
+        # Generate RSS, FOAF and OPML
+        self._write_xml_output(output_dir)
         
         return output_path
     
@@ -379,7 +378,6 @@ class PlanetAggregator:
     
     def _process_conditionals(self, template, values):
         """Process __if_*__ conditionals in templates"""
-        # This is a simplified implementation and might need enhancement
         for key, value in values.items():
             if f'__if_{key}__' in template:
                 if value:
@@ -411,69 +409,25 @@ class PlanetAggregator:
         # Return in reverse chronological order
         return {k: grouped[k] for k in sorted(grouped.keys(), reverse=True)}
     
-    def _write_xml_output(self):
+    def _write_xml_output(self, output_dir):
         """Generate XML output files (RSS, FOAF, OPML)"""
         # Generate RSS 1.0
         if 'outputxml' in self.config:
-            self._write_rss(self.config.get('outputxml'))
+            self._write_rss(self.config.get('outputxml'), output_dir)
         
         # Generate RSS 2.0
         if 'outputxml2' in self.config:
-            self._write_rss2(self.config.get('outputxml2'))
+            self._write_rss2(self.config.get('outputxml2'), output_dir)
         
         # Generate FOAF
         if 'outputfoaf' in self.config:
-            self._write_foaf()
+            self._write_foaf(output_dir)
         
         # Generate OPML
         if 'outputopml' in self.config:
-            self._write_opml()
+            self._write_opml(output_dir)
     
-    def _write_rss(self, output_file):
-        """Generate RSS 1.0 output"""
-        max_articles = self.config.get('xmlmaxarticles', 30)
-        
-        articles_to_show = self.articles[:max_articles] if max_articles > 0 else self.articles
-        
-        rss = [
-            '<?xml version="1.0" encoding="utf-8"?>',
-            '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
-            '  <channel>',
-            '    <title>Planet SymPy</title>',
-            '    <link>https://planet.sympy.org/</link>',
-            '    <description>Planet SymPy - https://planet.sympy.org/</description>',
-            '    <atom:link href="https://planet.sympy.org/rss20.xml" rel="self" type="application/rss+xml" />',
-            '    <language>en</language>',
-            f'    <pubDate>{datetime.datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")}</pubDate>',
-        ]
-        
-        for article in articles_to_show:
-            pub_date = datetime.datetime.fromtimestamp(article.date).strftime("%a, %d %b %Y %H:%M:%S +0000")
-            
-            rss.append('    <item>')
-            rss.append(f'      <title>{html.escape(article.title)}</title>')
-            rss.append(f'      <link>{html.escape(article.link)}</link>')
-            rss.append(f'      <guid isPermaLink="false">{html.escape(article.id)}</guid>')
-            rss.append(f'      <pubDate>{pub_date}</pubDate>')
-            rss.append(f'      <description>{html.escape(article.description)}</description>')
-            rss.append(f'      <source url="{html.escape(article.feed.url)}">{html.escape(article.feed.title)}</source>')
-            rss.append('    </item>')
-        
-        rss.append('  </channel>')
-        rss.append('</rss>')
-        
-        # Determine output path
-        output_dir = self.config.get('output_dir', 'build')
-        output_path = os.path.join(output_dir, output_file)
-            
-        os.makedirs(output_dir, exist_ok=True)
-        
-        with open(output_path, 'w', encoding='utf-8') as f:
-            f.write('\n'.join(rss))
-        
-        logger.info(f"Wrote RSS output to {output_path}")
-    
-    def _write_rss2(self, output_file):
+    def _write_rss(self, output_file, output_dir):
         """Generate RSS 2.0 output"""
         max_articles = self.config.get('xmlmaxarticles', 30)
         
@@ -506,18 +460,18 @@ class PlanetAggregator:
         rss.append('  </channel>')
         rss.append('</rss>')
         
-        # Determine output path
-        output_dir = self.config.get('output_dir', 'build')
         output_path = os.path.join(output_dir, output_file)
-            
-        os.makedirs(output_dir, exist_ok=True)
         
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(rss))
         
-        logger.info(f"Wrote RSS 2.0 output to {output_path}")
+        logger.info(f"Wrote RSS output to {output_path}")
     
-    def _write_foaf(self):
+    def _write_rss2(self, output_file, output_dir):
+        """Generate RSS 2.0 output (same as RSS 1.0 for now)"""
+        self._write_rss(output_file, output_dir)
+    
+    def _write_foaf(self, output_dir):
         """Generate FOAF output"""
         output_file = self.config.get('outputfoaf', 'foafroll.xml')
         
@@ -547,18 +501,14 @@ class PlanetAggregator:
         foaf.append('  </foaf:Group>')
         foaf.append('</rdf:RDF>')
         
-        # Determine output path
-        output_dir = self.config.get('output_dir', 'build')
         output_path = os.path.join(output_dir, output_file)
-            
-        os.makedirs(output_dir, exist_ok=True)
         
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(foaf))
         
         logger.info(f"Wrote FOAF output to {output_path}")
     
-    def _write_opml(self):
+    def _write_opml(self, output_dir):
         """Generate OPML output"""
         output_file = self.config.get('outputopml', 'opml.xml')
         
@@ -581,65 +531,186 @@ class PlanetAggregator:
         opml.append('  </body>')
         opml.append('</opml>')
         
-        # Determine output path
-        output_dir = self.config.get('output_dir', 'build')
         output_path = os.path.join(output_dir, output_file)
-            
-        os.makedirs(output_dir, exist_ok=True)
         
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(opml))
         
         logger.info(f"Wrote OPML output to {output_path}")
 
-def main():
-    if len(sys.argv) < 3:
-        print("Usage: planet.py -d CONFIG_DIR [--update] [--write] [--output-dir OUTPUT_DIR]")
-        sys.exit(1)
+def build_site(output_dir="build"):
+    """Build the complete site"""
+    logger.info("Building Planet SymPy site")
     
-    # Parse command line arguments
-    config_dir = None
-    update = False
-    write = False
-    output_dir = "build"
+    # Clean any previous build
+    if os.path.exists(output_dir):
+        shutil.rmtree(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
     
-    i = 1
-    while i < len(sys.argv):
-        if sys.argv[i] == "-d" and i + 1 < len(sys.argv):
-            config_dir = sys.argv[i + 1]
-            i += 2
-        elif sys.argv[i] == "--update":
-            update = True
-            i += 1
-        elif sys.argv[i] == "--write":
-            write = True
-            i += 1
-        elif sys.argv[i] == "--output-dir" and i + 1 < len(sys.argv):
-            output_dir = sys.argv[i + 1]
-            i += 2
-        else:
-            i += 1
+    # Create necessary directories
+    os.makedirs(os.path.join(output_dir, "images"), exist_ok=True)
+    os.makedirs(os.path.join(output_dir, "hackergotchi"), exist_ok=True)
+    os.makedirs(os.path.join(output_dir, "js"), exist_ok=True)
+    os.makedirs(os.path.join(output_dir, "fonts"), exist_ok=True)
     
-    if not config_dir:
-        print("Error: No config directory specified")
-        sys.exit(1)
+    # Copy static resources
+    static_dir = "static"
+    if os.path.exists(static_dir):
+        for item in os.listdir(static_dir):
+            src = os.path.join(static_dir, item)
+            dst = os.path.join(output_dir, item)
+            if os.path.isdir(src):
+                shutil.copytree(src, dst, dirs_exist_ok=True)
+            else:
+                shutil.copy2(src, dst)
+        logger.info("Copied static resources")
     
     # Initialize and run the aggregator
+    aggregator = PlanetAggregator("config")
+    aggregator.update()
+    aggregator.write(output_dir)
+    
+    logger.info(f"Build completed: website files are in {output_dir}/")
+
+def deploy_site():
+    """Deploy the site to GitHub Pages"""
+    logger.info("Deploying Planet SymPy site")
+    
+    # Build first
+    build_site()
+    
+    # Determine if this is testing or production
+    testing = os.environ.get("TESTING") == "true"
+    repo_suffix = "-test" if testing else ""
+    
+    # Clone the target repository
+    subprocess.run([
+        "git", "clone", 
+        f"https://github.com/planet-sympy/planet.sympy.org{repo_suffix}"
+    ], check=True)
+    
+    os.chdir(f"planet.sympy.org{repo_suffix}")
+    
+    # Configure git
+    subprocess.run(["git", "config", "user.name", "Planet SymPy Bot"], check=True)
+    subprocess.run(["git", "config", "user.email", "noreply@sympy.org"], check=True)
+    
+    commit_message = f"Publishing site on {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    
+    # Switch to gh-pages branch
     try:
-        aggregator = PlanetAggregator(config_dir)
+        subprocess.run(["git", "checkout", "-t", "origin/gh-pages"], check=True)
+    except subprocess.CalledProcessError:
+        subprocess.run(["git", "checkout", "gh-pages"], check=True)
+    
+    # Remove existing files and copy new ones
+    for item in os.listdir("."):
+        if item != ".git":
+            if os.path.isdir(item):
+                shutil.rmtree(item)
+            else:
+                os.remove(item)
+    
+    # Copy built files
+    for item in os.listdir("../build"):
+        src = os.path.join("../build", item)
+        if os.path.isdir(src):
+            shutil.copytree(src, item)
+        else:
+            shutil.copy2(src, item)
+    
+    # Add CNAME file for production
+    if not testing:
+        with open("CNAME", "w") as f:
+            f.write("planet.sympy.org\n")
+    
+    # Add .nojekyll file
+    with open(".nojekyll", "w") as f:
+        f.write("")
+    
+    # Commit changes
+    subprocess.run(["git", "add", "-A", "."], check=True)
+    subprocess.run(["git", "commit", "-m", commit_message], check=True)
+    
+    logger.info("Deploying:")
+    
+    # Check if we have SSH key for deployment
+    if not os.environ.get("SSH_PRIVATE_KEY"):
+        logger.info("Not deploying because SSH_PRIVATE_KEY is empty.")
+        return
+    
+    # Push to GitHub
+    subprocess.run(["git", "push", "origin", "gh-pages"], check=True)
+    logger.info("Deployment completed")
+
+def run_scheduler():
+    """Run the deployment scheduler"""
+    import schedule
+    
+    logger.info("Starting Planet SymPy scheduler")
+    logger.info("Docker environment variables:")
+    
+    if os.environ.get("SSH_PRIVATE_KEY"):
+        logger.info("SSH_PRIVATE_KEY = <non-empty ssh private key>")
+    else:
+        logger.info("SSH_PRIVATE_KEY = <empty>")
+    
+    logger.info(f"TESTING = {os.environ.get('TESTING')}")
+    
+    # Schedule deployment every 6 hours
+    schedule.every(6).hours.do(deploy_site)
+    
+    # Run initial deployment
+    try:
+        deploy_site()
+    except Exception as e:
+        logger.error(f"Initial deployment failed: {e}")
+    
+    # Keep running
+    while True:
+        schedule.run_pending()
+        time.sleep(60)  # Check every minute
+
+def main():
+    parser = argparse.ArgumentParser(description="Planet SymPy - RSS/Atom feed aggregator")
+    subparsers = parser.add_subparsers(dest='command', help='Available commands')
+    
+    # Build command
+    build_parser = subparsers.add_parser('build', help='Build the website')
+    build_parser.add_argument('--output-dir', default='build', help='Output directory (default: build)')
+    
+    # Deploy command
+    deploy_parser = subparsers.add_parser('deploy', help='Deploy the website to GitHub Pages')
+    
+    # Scheduler command
+    scheduler_parser = subparsers.add_parser('scheduler', help='Run the deployment scheduler')
+    
+    # Legacy rawdog-style arguments for backwards compatibility
+    parser.add_argument('-d', '--config-dir', default='config', help='Configuration directory')
+    parser.add_argument('--update', action='store_true', help='Update feeds')
+    parser.add_argument('--write', action='store_true', help='Write output files')
+    parser.add_argument('--output-dir', default='build', help='Output directory')
+    
+    args = parser.parse_args()
+    
+    if args.command == 'build':
+        build_site(args.output_dir)
+    elif args.command == 'deploy':
+        deploy_site()
+    elif args.command == 'scheduler':
+        run_scheduler()
+    elif args.update or args.write:
+        # Legacy mode for backwards compatibility
+        aggregator = PlanetAggregator(args.config_dir)
         
-        # Set output directory
-        aggregator.config['output_dir'] = output_dir
-        
-        if update:
+        if args.update:
             aggregator.update()
         
-        if write:
-            aggregator.write()
-            
-    except Exception as e:
-        logger.error(f"Error: {e}")
-        sys.exit(1)
+        if args.write:
+            aggregator.write(args.output_dir)
+    else:
+        # Default: build the site
+        build_site()
 
 if __name__ == "__main__":
     main()

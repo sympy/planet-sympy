@@ -23,16 +23,12 @@ RUN groupadd -r swuser -g 433 && \
     chown -R swuser:swuser /home/swuser
 WORKDIR /home/swuser
 
-ADD planet planet
-ADD update.sh update.sh
-ADD build.sh build.sh
-ADD scheduler.py scheduler.py
+ADD config config
+ADD static static
 ADD planet.py planet.py
-RUN chmod +x planet.py update.sh build.sh scheduler.py && \
-    chown -R swuser:swuser planet update.sh scheduler.py planet.py
+RUN chmod +x planet.py && \
+    chown -R swuser:swuser config static planet.py
 
 USER swuser
 
-RUN mkdir -p testrun/
-
-CMD ["python3", "./scheduler.py"]
+CMD ["python3", "./planet.py", "scheduler"]

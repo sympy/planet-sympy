@@ -11,8 +11,8 @@ To have your blog added:
 - Attach a photo of your face for hackergotchi.
 
 Alternatively, you can submit a pull request:
-- Add your hackergotchi in `planet/website/hackergotchi/`. A hackergotchi should be a photo of your face smaller than 80x80 pixels with a transparent background.
-- At the end of the `planet/planetsympy/config` file add your details:
+- Add your hackergotchi in `static/hackergotchi/`. A hackergotchi should be a photo of your face smaller than 80x80 pixels with a transparent background.
+- At the end of the `config/config` file add your details:
 ```
 feed 15m http://example.com/feeds/feed.sympy.xml
         define_name Your Name (yourgithubhandle)
@@ -26,10 +26,10 @@ feed 15m http://example.com/feeds/feed.sympy.xml
 To build the site locally, run:
 
 ```
-./build.sh
+python3 planet.py build
 ```
 
-This requires Python 3 and the following libraries: `feedparser` and `requests`.
+This requires Python 3 and the following libraries: `feedparser`, `requests`, and `schedule`.
 
 ## Deployment
 
@@ -41,9 +41,19 @@ The site is automatically updated every 6 hours using GitHub Actions. The workfl
 
 You can check the status of the latest update by looking at the Actions tab in this repository.
 
+## Usage
+
+The `planet.py` script provides several commands:
+
+- `python3 planet.py build` - Build the website locally
+- `python3 planet.py deploy` - Build and deploy to GitHub Pages
+- `python3 planet.py scheduler` - Run the deployment scheduler (used in Docker)
+
 ## Technical Details
 
 The site uses a custom Python-based RSS aggregator that:
-- Fetches and parses RSS/Atom feeds
-- Generates HTML output using templates
-- Provides RSS, FOAF, and OPML formats
+- Fetches and parses RSS/Atom feeds from contributor blogs
+- Generates HTML output using configurable templates
+- Provides RSS, FOAF, and OPML formats for syndication
+- Supports concurrent feed fetching for performance
+- Includes modern Bootstrap styling
