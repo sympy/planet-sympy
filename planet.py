@@ -13,6 +13,7 @@ import shutil
 import argparse
 
 import feedparser
+import yaml
 
 # Configure logging
 logging.basicConfig(
@@ -76,7 +77,7 @@ class Article:
 class PlanetAggregator:
     def __init__(self, config_dir):
         self.config_dir = config_dir
-        self.config_file = os.path.join(config_dir, "config")
+        self.config_file = os.path.join(config_dir, "config.yaml")
         self.feeds = []
         self.articles = []
         self.templates = {}
@@ -87,7 +88,7 @@ class PlanetAggregator:
         """Read the planet config file"""
         logger.info(f"Reading config from {self.config_file}")
 
-        # Default config values
+        # Default config values - these are hard-coded as specified
         self.config = {
             "maxarticles": 30,
             "maxage": 0,
@@ -109,71 +110,23 @@ class PlanetAggregator:
 
         try:
             with open(self.config_file, "r", encoding="utf-8") as f:
-                content = f.read()
+                yaml_config = yaml.safe_load(f)
 
-            # Parse feeds and their options
-            in_feed = False
-            current_feed = None
-            feed_options = {}
+            # Process feeds
+            for feed_data in yaml_config.get("feeds", []):
+                url = feed_data["url"]
+                feed_options = {}
 
-            for line in content.splitlines():
-                orig_line = line
-                line = line.strip()
-                if not line or line.startswith("#"):
-                    continue
+                # Map YAML fields to feed options
+                if "name" in feed_data:
+                    feed_options["define_name"] = feed_data["name"]
+                if "face" in feed_data:
+                    feed_options["define_face"] = feed_data["face"]
+                    # Set default dimensions for faces (as specified, these are now defined by CSS)
+                    feed_options["define_facewidth"] = 80
+                    feed_options["define_faceheight"] = 80
 
-                # Check for config options
-                if line.startswith("feed "):
-                    if in_feed and current_feed:
-                        self.feeds.append(Feed(current_feed, **feed_options))
-
-                    in_feed = True
-                    parts = line[5:].split()
-                    period = parts[0]
-                    url = parts[1]
-                    current_feed = url
-                    feed_options = {"period": period}
-
-                    # Check for key=value arguments
-                    for arg in parts[2:]:
-                        if "=" in arg:
-                            key, value = arg.split("=", 1)
-                            feed_options[key] = value
-
-                elif in_feed and orig_line.startswith(" ") and line.strip():
-                    # Feed option on a new line
-                    line = line.strip()
-                    if "=" in line:
-                        key, value = line.split("=", 1)
-                    else:
-                        # Handle space-separated format like "define_name Timo Stienstra"
-                        parts = line.split(" ", 1)
-                        if len(parts) == 2:
-                            key, value = parts
-                        else:
-                            continue
-                    feed_options[key] = value
-
-                elif " " in line and not in_feed:
-                    # Config option
-                    key, value = line.split(" ", 1)
-
-                    # Convert numeric values
-                    if key in ["maxarticles", "maxage", "xmlmaxarticles", "numthreads"]:
-                        try:
-                            value = int(value)
-                        except ValueError:
-                            pass
-
-                    # Convert boolean values
-                    elif value.lower() in ["true", "false"]:
-                        value = value.lower() == "true"
-
-                    self.config[key] = value
-
-            # Add the last feed
-            if in_feed and current_feed:
-                self.feeds.append(Feed(current_feed, **feed_options))
+                self.feeds.append(Feed(url, **feed_options))
 
             # Read template files
             template_file = self.config.get("template", "planet_template")

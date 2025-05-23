@@ -12,13 +12,11 @@ To have your blog added:
 
 Alternatively, you can submit a pull request:
 - Add your hackergotchi in `static/hackergotchi/`. A hackergotchi should be a photo of your face smaller than 80x80 pixels with a transparent background.
-- At the end of the `config/config` file add your details:
-```
-feed 15m http://example.com/feeds/feed.sympy.xml
-        define_name Your Name (yourgithubhandle)
-        define_face hackergotchi/yourgithubhandle.jpg
-        define_facewidth 80
-        define_faceheight 80
+- Add your feed details to the `config/config.yaml` file:
+```yaml
+  - url: http://example.com/feeds/feed.sympy.xml
+    name: Your Name (yourgithubhandle)
+    face: hackergotchi/yourgithubhandle.jpg
 ```
 
 ## Development
@@ -29,7 +27,7 @@ To build the site locally, run:
 python3 planet.py build
 ```
 
-This requires Python 3 and the following libraries: `feedparser`, `requests`, and `schedule`.
+This requires Python 3 and the following libraries: `feedparser`, `pyyaml`, `requests`, and `schedule`.
 
 ## Deployment
 

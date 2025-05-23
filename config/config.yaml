@@ -1,0 +1,168 @@
+feeds:
+  - url: http://sumith1896.github.io/feeds/feed.sympy.xml
+    name: Sumith (sumith1896)
+    face: hackergotchi/sumith1896.png
+
+  - url: https://www.asmeurer.com/blog/rss.xml
+    name: Aaron Meurer (asmeurer)
+    face: hackergotchi/asmeurer.jpg
+
+  - url: http://isuruf.blogspot.com/feeds/posts/default
+    name: Isuru Fernando (isuruf)
+    face: hackergotchi/isuruf.jpg
+
+  - url: http://iamit.in/blog/feeds/sympy.xml
+    name: Amit Kumar (aktech)
+    face: hackergotchi/aktech.jpg
+
+  - url: https://rajithsays.wordpress.com/category/symengine/feed/
+    name: Rajith Vidanaarachchi (rajithv)
+    face: hackergotchi/rajithv.jpg
+
+  - url: http://srajangarg.github.io/feed.xml
+    name: Srajan Garg (srajangarg)
+    face: hackergotchi/srajangarg.jpg
+
+  - url: https://shubhamtibra.wordpress.com/feed/
+    name: Subham Tibra (shubhamtibra)
+    face: hackergotchi/shubham.jpg
+
+  - url: http://shekharrajak.github.io/feed.xml
+    name: Shekhar Prasad Rajak (shekharrajak)
+    face: hackergotchi/shekharrajak.jpg
+
+  - url: https://gxyd.github.io/atom.xml
+    name: Gaurav Dhingra (gxyd)
+    face: hackergotchi/gxyd.jpg
+
+  - url: https://sampadblog.wordpress.com/feed/
+    name: Sampad Saha (sampadsaha5)
+    face: hackergotchi/sampad.jpg
+
+  - url: http://nishnik.github.io/feed.xml
+    name: Nishant Nikhil (nishnik)
+    face: hackergotchi/nishnik.jpg
+
+  - url: http://jbm950.github.io/feed.xml
+    name: James Milam (jbm950)
+    face: hackergotchi/jbm950.jpg
+
+  - url: https://kshitij10496.github.io/feed.xml
+    name: Kshitij Saraogi(kshitij10496)
+    face: hackergotchi/kshitij10496.jpg
+
+  - url: http://ravicharann.github.io/blog/feed.xml
+    name: Ravicharan (RavicharanN)
+    face: hackergotchi/ravicharan.jpg
+
+  - url: https://valglad.github.io/feed.xml
+    name: Valeriia Gladkova (valglad)
+    face: hackergotchi/valglad.jpg
+
+  - url: http://ranjithkumar007.github.io/feed.xml
+    name: Ranjith Kumar (ranjithkumar007)
+    face: hackergotchi/ranjithkumar007.png
+
+  - url: https://parsoyaarihant.github.io/blog/feed.xml
+    name: Arihant Parsoya (parsoyaarihant)
+    face: hackergotchi/parsoyaarihant.jpeg
+
+  - url: https://bjodah.github.io/blog/rss.xml
+    name: Björn Dahlgren (bjodah)
+    face: hackergotchi/bjodah.jpg
+
+  - url: https://nesar2017.wordpress.com/feed/
+    name: Abdullah Javed Nesar (Abdullahjavednesar)
+    face: hackergotchi/Abdullahjavednesar.jpg
+
+  - url: https://szymag.github.io/feed.xml
+    name: Szymon Mieszczak (szymag)
+    face: hackergotchi/szymag.jpg
+
+  - url: http://sidhantnagpal.github.io/rss-gsoc.xml
+    name: Sidhant Nagpal (sidhantnagpal)
+    face: hackergotchi/sidhantnagpal.jpg
+
+  - url: http://yathartha22.github.io/feed.sympy.xml
+    name: Yathartha Joshi (Yathartha22)
+    face: hackergotchi/yathartha.jpg
+
+  - url: https://singhjashan.wordpress.com/feed
+    name: Jashanpreet Singh Sraw (jashan498)
+    face: hackergotchi/jashan498.jpg
+
+  - url: http://ashishkg0022.blogspot.in/feeds/posts/default?alt=rss
+    name: Ashish Kumar Gaurav (ashishkg0022)
+    face: hackergotchi/ashishkg0022.jpg
+
+  - url: https://nkhlpappu.wordpress.com/tag/sympy/feed
+    name: Nikhil Pappu (NikhilPappu)
+    face: hackergotchi/NikhilPappu.jpeg
+
+  - url: https://arighnaiitg.github.io/feed.xml
+    name: Arighna Chakrabarty (arighnaiitg)
+    face: hackergotchi/Arighna.jpg
+
+  - url: http://jmig5776.github.io/feed.sympy.xml
+    name: Jogi Miglani (jmig5776)
+    face: hackergotchi/jmig5776.jpg
+
+  - url: http://shubhamkjha.github.io/sympy_feed.xml
+    name: Shubham Kumar Jha (ShubhamKJha)
+    face: hackergotchi/shubhamkjha.jpg
+
+  - url: https://ishanaj.wordpress.com/category/sympy/feed/
+    name: Ishan Joshi (ishanaj)
+    face: hackergotchi/ishanaj.jpg
+
+  - url: http://divyanshu132.github.io/feed.sympy.xml
+    name: Divyanshu Thakur (divyanshu132)
+    face: hackergotchi/divyanshu132.jpg
+
+  - url: http://ritesh99rakesh.github.io/feed.xml
+    name: Ritesh Kumar (ritesh99rakesh)
+    face: hackergotchi/ritesh99rakesh.jpg
+
+  - url: https://anpandey.github.io/atom-sympy.xml
+    name: Ankit Pandey (anpandey)
+    face: hackergotchi/anpandey.jpg
+
+  - url: https://www.kangzhiq.com/tag/sympy/feed/
+    name: Zhiqi KANG (kangzhiq)
+    face: hackergotchi/kangzhiq.jpg
+
+  - url: https://sc0rpi0n101.github.io/categories/gsoc/index.xml
+    name: Nikhil Maan (Sc0rpi0n101)
+    face: hackergotchi/Nikhil_Maan.jpg
+
+  - url: https://smit-create.github.io/feed.xml
+    name: Smit Lunagariya (Smit-create)
+    face: hackergotchi/Smitlunagariya.jpg
+
+  - url: https://namannimmo10.github.io/emerald/atom.xml
+    name: Naman Gera (namannimmo10)
+    face: hackergotchi/namannimmo10.jpg
+
+  - url: https://sachin-4099.github.io/feed.sympy.xml
+    name: Sachin Agarwal (sachin-4099)
+    face: hackergotchi/sachin-4099.jpg
+
+  - url: https://friyaz.github.io/feed.sympy.xml
+    name: Faisal Riyaz (friyaz)
+    face: hackergotchi/friyaz.jpg
+
+  - url: http://abhinav28071999.github.io/feed.xml
+    name: Abhinav Anand (abhinav28071999)
+    face: hackergotchi/abhinav28071999.jpg
+
+  - url: https:///mijo2.github.io/feed.xml
+    name: Milan Jolly (mijo2)
+    face: hackergotchi/mijo2.jpg
+
+  - url: https://medium.com/feed/@mohitbalwani.ict17
+    name: Mohit Balwani (Mohitbalwani26)
+    face: hackergotchi/Mohitbalwani26.jpg
+
+  - url: https://tjstienstra.github.io/feed.xml
+    name: Timo Stienstra (TJStienstra)
+    face: hackergotchi/tjstienstra.jpg
