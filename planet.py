@@ -645,60 +645,18 @@ def deploy_site():
     logger.info("Deployment completed")
 
 
-def run_scheduler():
-    """Run the deployment scheduler"""
-    import schedule
-
-    logger.info("Starting Planet SymPy scheduler")
-    logger.info("Docker environment variables:")
-
-    if os.environ.get("SSH_PRIVATE_KEY"):
-        logger.info("SSH_PRIVATE_KEY = <non-empty ssh private key>")
-    else:
-        logger.info("SSH_PRIVATE_KEY = <empty>")
-
-    logger.info(f"TESTING = {os.environ.get('TESTING')}")
-
-    # Schedule deployment every 6 hours
-    schedule.every(6).hours.do(deploy_site)
-
-    # Run initial deployment
-    try:
-        deploy_site()
-    except Exception as e:
-        logger.error(f"Initial deployment failed: {e}")
-
-    # Keep running
-    while True:
-        schedule.run_pending()
-        time.sleep(60)  # Check every minute
-
-
 def main():
     parser = argparse.ArgumentParser(
         description="Planet SymPy - RSS/Atom feed aggregator"
     )
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
-    # Build command
     build_parser = subparsers.add_parser("build", help="Build the website")
     build_parser.add_argument(
         "--output-dir", default="build", help="Output directory (default: build)"
     )
 
-    # Deploy command
     subparsers.add_parser("deploy", help="Deploy the website to GitHub Pages")
-
-    # Scheduler command
-    subparsers.add_parser("scheduler", help="Run the deployment scheduler")
-
-    # Legacy rawdog-style arguments for backwards compatibility
-    parser.add_argument(
-        "-d", "--config-dir", default="config", help="Configuration directory"
-    )
-    parser.add_argument("--update", action="store_true", help="Update feeds")
-    parser.add_argument("--write", action="store_true", help="Write output files")
-    parser.add_argument("--output-dir", default="build", help="Output directory")
 
     args = parser.parse_args()
 
@@ -706,17 +664,6 @@ def main():
         build_site(args.output_dir)
     elif args.command == "deploy":
         deploy_site()
-    elif args.command == "scheduler":
-        run_scheduler()
-    elif args.update or args.write:
-        # Legacy mode for backwards compatibility
-        aggregator = PlanetAggregator(args.config_dir)
-
-        if args.update:
-            aggregator.update()
-
-        if args.write:
-            aggregator.write(args.output_dir)
     else:
         # Default: build the site
         build_site()
