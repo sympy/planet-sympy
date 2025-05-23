@@ -241,7 +241,7 @@ class PlanetAggregator:
                 face_html = ""
                 if feed.get_face():
                     width, height = feed.get_face_dimensions()
-                    face_html = f"<img class='face' src='{feed.get_face()}' width='{width}' height='{height}' alt='' />"
+                    face_html = f"<img class='face' src='avatars/{feed.get_face()}' width='{width}' height='{height}' alt='' />"
 
                 feeds_html.append(
                     f"<li>{face_html}<a href='{feed.link}'>{feed.get_name()}</a></li>"
@@ -543,7 +543,7 @@ def build_site(output_dir="build"):
 
     # Create necessary directories
     os.makedirs(os.path.join(output_dir, "images"), exist_ok=True)
-    os.makedirs(os.path.join(output_dir, "hackergotchi"), exist_ok=True)
+    os.makedirs(os.path.join(output_dir, "avatars"), exist_ok=True)
     os.makedirs(os.path.join(output_dir, "js"), exist_ok=True)
     os.makedirs(os.path.join(output_dir, "fonts"), exist_ok=True)
 

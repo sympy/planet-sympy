@@ -9,7 +9,7 @@
                         <tr>
                             <td rowspan="2" class="consizeit" style="vertical-align:middle;">
                                 <div style="margin-right:5px;">
-                                     __if_face__ <img src="__face__" width="__facewidth__" height="__faceheight__"/> __endif__
+                                     __if_face__ <img src="avatars/__face__" width="__facewidth__" height="__faceheight__"/> __endif__
                                 </div>
                             </td>
                             <td style="vertical-align:bottom;">

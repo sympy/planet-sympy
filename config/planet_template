@@ -126,16 +126,15 @@
                 </div>
                 <div class="modal-body">
                     <p>If you are a SymPy contributor you can have your blog on Planet SymPy. Blog content can be SymPy/SymEngine/SciPy/Python themed, English language and not liable to offend. If you have a general blog you may want to set up a tag and subscribe the feed for that tag only to Planet SymPy.</p>
-                    <p>To have your blog added, file an issue on the <a href="https://github.com/sympy/planet-sympy">planet-sympy GitHub repository</a> listing your name, GitHub handle (if you have one), RSS or Atom feed, and what you do in SymPy. Attach a photo of your face for hackergotchi.</p>
+                    <p>To have your blog added, file an issue on the <a href="https://github.com/sympy/planet-sympy">planet-sympy GitHub repository</a> listing your name, GitHub handle (if you have one), RSS or Atom feed, and what you do in SymPy. Attach a photo of your avatar.</p>
                     <p>Alternatively, Planet SymPy is kept in GitHub. If you have an account you can add or edit your own feed:</p>
                     <pre>git clone git@github.com:sympy/planet-sympy.git</pre>
-                    <p>Put your hackergotchi in planet/website/hackergotchi/. A hackergotchi should be a photo of your face smaller than 80x80 pixels with a transparent background. git add the file.</p>
-                    <p>At the end of the planetsympy/config file add your details:</p>
-                    <pre>feed 15m http://sumith1896.github.io/feeds/feed.sympy.xml
-    define_name Sumith (sumith1896)
-    define_face hackergotchi/sumith1896.png
-    define_facewidth 80
-    define_faceheight 80</pre>
+                    <p>Put your avatar photo in static/avatars. An avatar should 80x80 pixels. git add the file.</p>
+                    <p>At the end of the config/config.yaml file add your details:</p>
+                    <pre>- url: http://example.com/feeds/feed.sympy.xml
+  name: Your Name (yourgithubhandle)
+  face: yourgithubhandle.jpg
+</pre>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

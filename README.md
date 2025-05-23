@@ -6,17 +6,13 @@ This repository contains the code for the [Planet SymPy](https://planet.sympy.or
 
 If you are a SymPy contributor, you can have your blog on Planet SymPy. Blog content can be SymPy/SymEngine/SciPy/Python themed, English language and not liable to offend. If you have a general blog, you may want to set up a tag and subscribe the feed for that tag only to Planet SymPy.
 
-To have your blog added:
-- File an issue on this GitHub repository listing your name, GitHub handle (if you have one), RSS or Atom feed and what you do in SymPy.
-- Attach a photo of your face for hackergotchi.
-
-Alternatively, you can submit a pull request:
-- Add your hackergotchi in `static/hackergotchi/`. A hackergotchi should be a photo of your face smaller than 80x80 pixels with a transparent background.
+To have your blog added, submit a pull request:
+- Add your photo in `static/avatars/`. Avatar photos should be 80x80 pixels.
 - Add your feed details to the `config/config.yaml` file:
 ```yaml
   - url: http://example.com/feeds/feed.sympy.xml
     name: Your Name (yourgithubhandle)
-    face: hackergotchi/yourgithubhandle.jpg
+    face: yourgithubhandle.jpg
 ```
 
 ## Development
