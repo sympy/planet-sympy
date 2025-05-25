@@ -21,11 +21,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install feedparser requests
+        pip install feedparser requests pyyaml
 
     - name: Build site
       run: |
-        ./build.sh
+        python planet.py build
 
     - name: Check build output
       run: |

@@ -8,9 +8,9 @@ import hashlib
 import logging
 from concurrent.futures import ThreadPoolExecutor
 import html
-import subprocess
 import shutil
 import argparse
+import subprocess
 
 import feedparser
 import yaml
