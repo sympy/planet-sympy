@@ -23,15 +23,15 @@ To build the site locally, run:
 python3 planet.py build
 ```
 
-This requires Python 3 and the following libraries: `feedparser`, `pyyaml`, `requests`, and `schedule`.
+This requires Python 3 and the following libraries: `feedparser`, `pyyaml`, and `requests`.
 
 ## Deployment
 
 The site is automatically updated every 6 hours using GitHub Actions. The workflow:
 
-1. Builds a Docker image containing the necessary code and dependencies
+1. Sets up Python environment and installs dependencies
 2. Runs the site generator to fetch feeds and generate the HTML output
-3. Pushes the generated files to the [planet.sympy.org](https://github.com/planet-sympy/planet.sympy.org) repository
+3. Deploys the generated files directly to GitHub Pages
 
 You can check the status of the latest update by looking at the Actions tab in this repository.
 
@@ -41,7 +41,6 @@ The `planet.py` script provides several commands:
 
 - `python3 planet.py build` - Build the website locally
 - `python3 planet.py deploy` - Build and deploy to GitHub Pages
-- `python3 planet.py scheduler` - Run the deployment scheduler (used in Docker)
 
 ## Technical Details
 
