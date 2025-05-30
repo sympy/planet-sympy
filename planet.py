@@ -14,6 +14,7 @@ import subprocess
 
 import feedparser
 import yaml
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 # Configure logging
 logging.basicConfig(
@@ -82,6 +83,12 @@ class PlanetAggregator:
         self.articles = []
         self.templates = {}
         self.config = {}
+        self.jinja_env = Environment(
+            loader=FileSystemLoader(config_dir),
+            autoescape=select_autoescape(["html", "xml"]),
+            trim_blocks=True,
+            lstrip_blocks=True,
+        )
         self.read_config()
 
     def read_config(self):
@@ -128,28 +135,20 @@ class PlanetAggregator:
 
                 self.feeds.append(Feed(url, **feed_options))
 
-            # Read template files
+            # Load Jinja2 templates
             template_file = self.config.get("template", "planet_template")
             itemtemplate_file = self.config.get("itemtemplate", "itemplate")
 
-            self.templates["template"] = self._read_template(template_file)
-            self.templates["itemtemplate"] = self._read_template(itemtemplate_file)
+            self.templates["template"] = self.jinja_env.get_template(template_file)
+            self.templates["itemtemplate"] = self.jinja_env.get_template(
+                itemtemplate_file
+            )
 
             logger.info(f"Loaded {len(self.feeds)} feeds from config")
 
         except Exception as e:
             logger.error(f"Error reading config: {e}")
             raise
-
-    def _read_template(self, template_name):
-        """Read a template file from the config directory"""
-        template_path = os.path.join(self.config_dir, template_name)
-        try:
-            with open(template_path, "r", encoding="utf-8") as f:
-                return f.read()
-        except Exception as e:
-            logger.error(f"Error reading template {template_name}: {e}")
-            return ""
 
     def fetch_feed(self, feed):
         """Fetch a single feed"""
@@ -247,30 +246,27 @@ class PlanetAggregator:
                     f"<li>{face_html}<a href='{feed.link}'>{feed.get_name()}</a></li>"
                 )
 
-        # Fill in the main template
-        output = self.templates["template"]
-        output = output.replace("__version__", "Planet SymPy 2.0")
-        output = output.replace("__items__", "\n".join(items_html))
-        output = output.replace("__num_items__", str(len(articles_to_show)))
-        output = output.replace(
-            "__feeds__",
-            "<ul>\n" + "\n".join(feeds_html) + "\n</ul>" if feeds_html else "",
-        )
-        output = output.replace("__num_feeds__", str(len(self.feeds)))
+        # Render the main template with Jinja2
+        template_context = {
+            "version": "Planet SymPy 2.0",
+            "items": "\n".join(items_html),
+            "num_items": len(articles_to_show),
+            "feeds": "\n".join(feeds_html) if feeds_html else "",
+            "num_feeds": len(self.feeds),
+            "rss10": "rss10.xml",
+            "rss20": "rss20.xml",
+        }
 
-        # Generate refresh meta tag if needed
+        # Add refresh meta tag if needed
         if self.config.get("userefresh", True):
             refresh_time = 60  # Default to 60 minutes
-            output = output.replace(
-                "__refresh__",
-                f'<meta http-equiv="refresh" content="{refresh_time * 60}" />',
+            template_context["refresh"] = (
+                f'<meta http-equiv="refresh" content="{refresh_time * 60}" />'
             )
         else:
-            output = output.replace("__refresh__", "")
+            template_context["refresh"] = ""
 
-        # Add RSS links
-        output = output.replace("__rss10__", "rss10.xml")
-        output = output.replace("__rss20__", "rss20.xml")
+        output = self.templates["template"].render(template_context)
 
         # Create output directory if it doesn't exist
         os.makedirs(output_dir, exist_ok=True)
@@ -291,85 +287,44 @@ class PlanetAggregator:
 
     def _format_article(self, article):
         """Format a single article using the item template"""
-        output = self.templates["itemtemplate"]
-
         feed = article.feed
-
-        # Replace variables in the template
-        output = output.replace(
-            "__title__",
-            f"<a href='{article.link}'>{article.title}</a>"
-            if article.link
-            else article.title,
-        )
-        output = output.replace("__title_no_link__", article.title)
-        output = output.replace("__url__", article.link)
-        output = output.replace("__guid__", article.id)
-        output = output.replace("__description__", article.description)
 
         # Format dates
         dt_format = self.config.get("datetimeformat", "%H:%M, %A, %d %B")
         article_date = datetime.datetime.fromtimestamp(article.date)
-        output = output.replace("__date__", article_date.strftime(dt_format))
-
         added_date = datetime.datetime.fromtimestamp(article.added)
-        output = output.replace("__added__", added_date.strftime(dt_format))
 
-        # Article hash
-        output = output.replace("__hash__", article.get_hash())
+        # Prepare template context
+        context = {
+            "title": f"<a href='{article.link}'>{article.title}</a>"
+            if article.link
+            else article.title,
+            "title_no_link": article.title,
+            "url": article.link,
+            "guid": article.id,
+            "description": article.description,
+            "date": article_date.strftime(dt_format),
+            "added": added_date.strftime(dt_format),
+            "hash": article.get_hash(),
+            "feed_title": f"<a href='{feed.link}'>{feed.title}</a>"
+            if feed.link
+            else feed.title,
+            "feed_title_no_link": feed.title,
+            "feed_url": feed.url,
+            "feed_hash": hashlib.md5(feed.url.encode("utf-8")).hexdigest(),
+            "feed_id": feed.get_id(),
+            "face": feed.get_face(),
+            "facewidth": feed.get_face_dimensions()[0],
+            "faceheight": feed.get_face_dimensions()[1],
+        }
 
-        # Feed information
-        output = output.replace(
-            "__feed_title__",
-            f"<a href='{feed.link}'>{feed.title}</a>" if feed.link else feed.title,
-        )
-        output = output.replace("__feed_title_no_link__", feed.title)
-        output = output.replace("__feed_url__", feed.url)
-        output = output.replace(
-            "__feed_hash__", hashlib.md5(feed.url.encode("utf-8")).hexdigest()
-        )
-        output = output.replace("__feed_id__", feed.get_id())
-
-        # Replace any custom feed definitions
+        # Add any custom feed definitions
         for key, value in feed.options.items():
             if key.startswith("define_"):
                 var_name = key[7:]  # Remove 'define_' prefix
-                output = output.replace(f"__{var_name}__", str(value))
+                context[var_name] = str(value)
 
-        # Process conditionals like __if_description__
-        face_value = feed.get_face()
-        output = self._process_conditionals(
-            output,
-            {
-                "title": article.title,
-                "url": article.link,
-                "guid": article.id,
-                "description": article.description,
-                "feed_title": feed.title,
-                "feed_url": feed.url,
-                "face": face_value,
-            },
-        )
-
-        return output
-
-    def _process_conditionals(self, template, values):
-        """Process __if_*__ conditionals in templates"""
-        for key, value in values.items():
-            if f"__if_{key}__" in template:
-                if value:
-                    # Replace the conditional with its content
-                    pattern = f"__if_{key}__(.*?)__endif__"
-                    template = re.sub(pattern, r"\1", template, flags=re.DOTALL)
-                else:
-                    # Remove the conditional and its content
-                    pattern = f"__if_{key}__.*?__endif__"
-                    template = re.sub(pattern, "", template, flags=re.DOTALL)
-
-        # Clean up any remaining conditionals
-        template = re.sub(r"__if_.*?__.*?__endif__", "", template, flags=re.DOTALL)
-
-        return template
+        return self.templates["itemtemplate"].render(context)
 
     def _group_by_day(self, articles):
         """Group articles by day"""

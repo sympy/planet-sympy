@@ -88,7 +88,7 @@
     </nav>
 
     <div class="container">
-        __items__
+        {{ items|safe }}
     </div>
 
     <!-- Modal for People -->
@@ -105,7 +105,7 @@
                     </p>
                     <p>
                         <ul class="bluebor">
-                            __feeds__
+                            {{ feeds|safe }}
                         </ul>
                     </p>
                 </div>
