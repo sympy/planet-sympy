@@ -1,6 +1,8 @@
 name: Update Planet SymPy
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:  # Allow manual trigger
   schedule:
     - cron: '0 */6 * * *'  # Run every 6 hours
