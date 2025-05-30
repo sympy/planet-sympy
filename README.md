@@ -23,7 +23,11 @@ To build the site locally, run:
 python3 planet.py build
 ```
 
-This requires Python 3 and the following libraries: `feedparser`, `pyyaml`, and `requests`.
+This requires Python 3. Install dependencies with:
+
+```
+pip install -r requirements.txt
+```
 
 ## Deployment
 
