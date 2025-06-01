@@ -62,10 +62,34 @@ class Article:
         self.added = time.time()
 
     def _parse_date(self, entry):
+        # Try published_parsed first (most reliable for feed ordering)
         if "published_parsed" in entry and entry.published_parsed:
-            return time.mktime(entry.published_parsed)
-        elif "updated_parsed" in entry and entry.updated_parsed:
-            return time.mktime(entry.updated_parsed)
+            try:
+                return time.mktime(entry.published_parsed)
+            except (ValueError, OverflowError):
+                pass
+
+        # Try updated_parsed as fallback
+        if "updated_parsed" in entry and entry.updated_parsed:
+            try:
+                return time.mktime(entry.updated_parsed)
+            except (ValueError, OverflowError):
+                pass
+
+        # Try string date fields as last resort
+        for date_field in ["published", "updated", "created"]:
+            if date_field in entry and entry[date_field]:
+                try:
+                    parsed = feedparser._parse_date(entry[date_field])
+                    if parsed:
+                        return time.mktime(parsed)
+                except (ValueError, OverflowError, AttributeError):
+                    pass
+
+        # Only use current time as absolute last resort
+        logger.warning(
+            f"Could not parse date for article: {entry.get('title', 'Unknown')}"
+        )
         return time.time()
 
     def get_hash(self):
@@ -338,8 +362,17 @@ class PlanetAggregator:
                 grouped[day] = []
             grouped[day].append(article)
 
-        # Return in reverse chronological order
-        return {k: grouped[k] for k in sorted(grouped.keys(), reverse=True)}
+        # Sort articles within each day by date (newest first)
+        for day in grouped:
+            grouped[day].sort(key=lambda x: x.date, reverse=True)
+
+        # Return days in reverse chronological order (newest first)
+        sorted_days = sorted(
+            grouped.keys(),
+            key=lambda day: datetime.datetime.strptime(day, day_format),
+            reverse=True,
+        )
+        return {k: grouped[k] for k in sorted_days}
 
     def _write_xml_output(self, output_dir):
         """Generate XML output files (RSS, FOAF, OPML)"""
