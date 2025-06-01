@@ -166,3 +166,8 @@ feeds:
   - url: https://tjstienstra.github.io/feed.xml
     name: Timo Stienstra (TJStienstra)
     face: tjstienstra.jpg
+
+  - url: https://krishnavbajoria02.github.io/blog-sympy-gsoc2025/feed.xml
+    name: Krishnav Bajoria (@krishnavbajoria02)
+    face: krishnavbajoria02.jpg
+
