@@ -178,3 +178,7 @@ feeds:
   - url: https://rushabhmehta2005.github.io/feed.xml
     name: Rushabh Mehta (RushabhMehta2005)
     face: RushabhMehta2005.jpg
+
+  - url: https://salastro.github.io/feed/sympy.xml
+    name: SalahDin Rezk (salastro)
+    face: salahdin.jpg
