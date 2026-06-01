@@ -182,3 +182,7 @@ feeds:
   - url: https://salastro.github.io/feed/sympy.xml
     name: SalahDin Rezk (salastro)
     face: salahdin.jpg
+
+  - url: https://sujalkumar06.github.io/sympy-feed.xml
+    name: Sujal Kumar (sujalkumar06)
+    face: sujalkumar06.jpg
