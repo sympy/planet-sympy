@@ -67,7 +67,7 @@
                     </li>
                     <li><a href="#addmore" data-toggle="modal" data-target="#addmore">Add your Blog</a>
                     </li>
-                    <li><a href="#socfeeds" data-toggle="modal" data-target="#socfeeds">Twitter Feed</a>
+                    <li><a href="#hashtagsympy" data-toggle="modal" data-target="#hashtagsympy">Twitter Feed</a>
                     </li>
                     <li><a href="#hashtagsympy" data-toggle="modal" data-target="#hashtagsympy">#sympy</a>
                     </li>
@@ -76,7 +76,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="https://twitter.com/PlanetSymPy" id="donateLink">Follow @PlanetSymPy</a>
+                        <a href="https://live.sympy.org" id="donateLink">View SymPy Live</a>
                     </li>
                     <li>
                         <a href="http://www.sympy.org/en/donate.html" id="donateLink">Donate</a>
@@ -143,6 +143,7 @@
         </div>
     </div>
 
+    <!-- This hasnt been used, but i havent commented it out in case we want to use it later! -->
     <!-- Modal for Twitter Feed -->
     <div class="modal fade" id="socfeeds" tabindex="-1" role="dialog" aria-labelledby="socfeedsLabel">
         <div class="modal-dialog" role="document">
