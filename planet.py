@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 
-import os
-import time
-import datetime
-import re
-import hashlib
-import logging
-from concurrent.futures import ThreadPoolExecutor
-import html
-import shutil
 import argparse
+import datetime
+import hashlib
+import html
+import logging
+import os
+import re
+import shutil
 import subprocess
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 import feedparser
 import yaml
@@ -78,7 +78,7 @@ class Article:
 
         # Try string date fields as last resort
         for date_field in ["published", "updated", "created"]:
-            if date_field in entry and entry[date_field]:
+            if entry.get(date_field):
                 try:
                     parsed = feedparser._parse_date(entry[date_field])
                     if parsed:
